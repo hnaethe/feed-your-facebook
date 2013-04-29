@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="6yK-6D-lxf">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="deK-vS-chx">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="6yK-6D-lxf" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="4aH-fR-QoM"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bNA-Xh-1ik">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="2" kind="relationship" relationship="rootViewController" id="twH-l1-gUc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cak-cz-gvd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-161" y="-833"/>
+        </scene>
+        <!--Feed Table View Controller-->
+        <scene sceneID="LQx-cv-HqC">
+            <objects>
+                <viewController id="aKC-7N-QPu" customClass="FeedTableViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TNA-PU-JKg">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="zZn-7E-ffe"/>
+                    <connections>
+                        <segue destination="Kfb-pv-s5n" kind="push" identifier="feedItemSegue" id="BVZ-Lt-UPh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NA8-eC-iIt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="280" y="-196"/>
+        </scene>
+        <!--Feed Item Table View Controller-->
+        <scene sceneID="YG7-Bo-SDp">
+            <objects>
+                <viewController id="Kfb-pv-s5n" customClass="FeedItemTableViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="k16-fn-EoI">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="WQG-mb-zuv"/>
+                    <connections>
+                        <segue destination="pQk-Y1-jgm" kind="push" identifier="settingsSegue" id="Uiv-0P-a7T"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RmG-0B-bMI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="862" y="-196"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="5">
+            <objects>
+                <viewController id="2" customClass="ViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="J3Q-tU-c66"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Loading Feeds" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fwn-tJ-Qpe">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="125" id="70g-A2-pj0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
+                                <color key="textColor" red="0.47371122262773724" green="0.47402486313868614" blue="0.47533645072992703" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="J3Q-tU-c66" firstAttribute="centerY" secondItem="3" secondAttribute="centerY" type="default" id="8kI-Tv-7hO"/>
+                            <constraint firstItem="fwn-tJ-Qpe" firstAttribute="centerX" secondItem="3" secondAttribute="centerX" type="default" id="Lsi-Jk-60V"/>
+                            <constraint firstItem="fwn-tJ-Qpe" firstAttribute="centerX" secondItem="J3Q-tU-c66" secondAttribute="centerX" type="default" id="ibV-Hn-cYh"/>
+                            <constraint firstAttribute="bottom" secondItem="fwn-tJ-Qpe" secondAttribute="bottom" constant="195" id="pVJ-Q1-KjY"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="qoz-a2-Jgr"/>
+                    <connections>
+                        <segue destination="aKC-7N-QPu" kind="push" identifier="feedSegue" id="7Bh-gh-D97"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="297" y="-895"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="YJH-UI-m84">
+            <objects>
+                <viewController id="pQk-Y1-jgm" customClass="SettingsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gbx-jd-XNL">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="8JX-25-EB0"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BzD-O5-1g4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="860" y="-890"/>
+        </scene>
+    </scenes>
+    <classes>
+        <class className="FeedItemTableViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FeedItemTableViewController.h"/>
+        </class>
+        <class className="FeedTableViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FeedTableViewController.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="SettingsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
+        </class>
+        <class className="ViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
+        </class>
+    </classes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
