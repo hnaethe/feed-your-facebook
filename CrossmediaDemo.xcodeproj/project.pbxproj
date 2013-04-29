@@ -84,6 +84,7 @@
 		B1738EA71728951600F6EF0A /* FacebookHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookHandler.m; sourceTree = "<group>"; };
 		B1738EA917289A1E00F6EF0A /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		B1738EAA17289A1E00F6EF0A /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		B1BA7E8B172F05A200E09610 /* Projektbeschreibung_HendrikNäther_JessySuchowiers.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Projektbeschreibung_HendrikNäther_JessySuchowiers.docx"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +177,7 @@
 		B15D0C2E1720A4D1008B0CA2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B1BA7E8A172F058F00E09610 /* Documentation */,
 				B15D0C2F1720A4D1008B0CA2 /* CrossmediaDemo-Info.plist */,
 				B15D0C301720A4D1008B0CA2 /* InfoPlist.strings */,
 				B15D0C331720A4D1008B0CA2 /* main.m */,
@@ -219,6 +221,14 @@
 				B15D0CA617249E5C008B0CA2 /* FeedItemViewCell.m */,
 			);
 			name = FeedItem;
+			sourceTree = "<group>";
+		};
+		B1BA7E8A172F058F00E09610 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				B1BA7E8B172F05A200E09610 /* Projektbeschreibung_HendrikNäther_JessySuchowiers.docx */,
+			);
+			name = Documentation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
