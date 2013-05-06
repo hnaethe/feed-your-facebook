@@ -97,7 +97,7 @@
         }
     }
     
-    if(feed.hasNotBeenParsed)
+    if(feed.hasNotBeenParsed && !feed.isParsing)
     {
         [[MediaController sharedInstance] performSelectorInBackground:@selector(startParsingFeed:) withObject:feed];
     }

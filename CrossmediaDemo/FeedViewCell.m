@@ -70,7 +70,7 @@
 - (void)setFeed:(Feed *)feed
 {
     
-    if(feed.hasNotBeenParsed)
+    if(feed.isParsing)
     {
         [self showLoadingState:feed];
     }

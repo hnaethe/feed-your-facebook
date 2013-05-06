@@ -7,6 +7,7 @@
 //
 
 #import "FacebookHandler.h"
+#import "FeedItem.h"
 #import <FacebookSDK/FacebookSDK.h>
 
 NSString *const FBUserDidLoginNotification = @"FBUserDidLoginNotification";
@@ -38,11 +39,16 @@ NSString *const FBUserDidLogoutNotification = @"FBUserDidLogoutNotification";
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
        
         NSLog(@"cached Login");
-        [self openSession];
-    } else {
-        NSLog(@"manual login");
-        [self openSession];
-        
+        if(![self openSessionFromCache:YES])
+        {
+            NSLog(@"manual login");
+            [self openSessionFromCache:NO];
+        }
+    }
+    else
+    {
+         NSLog(@"manual login");
+        [self openSessionFromCache:NO];
     }
 }
 
@@ -112,10 +118,87 @@ NSString *const FBUserDidLogoutNotification = @"FBUserDidLogoutNotification";
     }
 }
 
-- (void)openSession
+- (void)getAccessIfNeeded
 {
-    [FBSession openActiveSessionWithReadPermissions:nil
-                                       allowLoginUI:YES
+    if ([FBSession.activeSession.permissions indexOfObject:@"publish_actions"] == NSNotFound) {
+        // if we don't already have the permission, then we request it now
+        [FBSession.activeSession requestNewPublishPermissions:@[@"publish_actions"]
+                                              defaultAudience:FBSessionDefaultAudienceFriends
+                                            completionHandler:^(FBSession *session, NSError *error) {
+                                                if (!error) {
+                                                   
+                                                }
+                                                //For this example, ignore errors (such as if user cancels).
+                                            }];
+    }
+}
+
+- (void)publishStoryWithFeedItem:(FeedItem *)item
+{
+    [self getAccessIfNeeded];
+    
+    /*NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+        item.title , @"caption",
+        item.description, @"description",
+        item.imageURL.relativePath, @"picture",
+        item.description, @"message",
+    nil];
+    
+    NSString *element;
+    
+    NSEnumerator *enumerator = parameters.objectEnumerator;
+    while (element = [enumerator nextObject]) {
+        NSLog(@"Jo: %@", element);
+    }*/
+    
+    static NSDateFormatter *formatter = nil;
+    if(!formatter)
+    {
+        formatter  = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"dd. MMMM, HH:mm:ss"];
+        
+    }
+    
+    NSDictionary *parameters = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+        item.link, @"link",
+      item.title, @"name",
+     [formatter stringFromDate:item.pubDate],  @"caption",
+     item.description, @"description",
+     nil];
+    
+    
+    
+    [FBRequestConnection
+     startWithGraphPath:@"me/feed"
+     parameters:parameters
+     HTTPMethod:@"POST"
+     completionHandler:^(FBRequestConnection *connection,
+                         id result,
+                         NSError *error) {
+         NSString *alertText;
+         if (error) {
+             alertText = [NSString stringWithFormat:
+                          @"error: domain = %@, code = %d",
+                          error.domain, error.code];
+         } else {
+             alertText = [NSString stringWithFormat:
+                          @"Posted action, id: %@",
+                          [result objectForKey:@"id"]];
+         }
+         // Show the result in an alert
+         [[[UIAlertView alloc] initWithTitle:@"Result"
+                                     message:alertText
+                                    delegate:self
+                           cancelButtonTitle:@"OK!"
+                           otherButtonTitles:nil]
+          show];
+     }];
+}
+
+- (BOOL)openSessionFromCache:(BOOL)isCache
+{
+   return [FBSession openActiveSessionWithReadPermissions:nil
+                                       allowLoginUI:!isCache
                                   completionHandler:
      ^(FBSession *session,
        FBSessionState state, NSError *error) {

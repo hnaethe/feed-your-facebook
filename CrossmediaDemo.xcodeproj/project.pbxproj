@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B13375BF173552B90017DCF8 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B13375BE173552B90017DCF8 /* DataManager.m */; };
+		B13375C1173559810017DCF8 /* test.plist in Resources */ = {isa = PBXBuildFile; fileRef = B13375C0173559810017DCF8 /* test.plist */; };
 		B15D0C281720A4D1008B0CA2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B15D0C271720A4D1008B0CA2 /* UIKit.framework */; };
 		B15D0C2A1720A4D1008B0CA2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B15D0C291720A4D1008B0CA2 /* Foundation.framework */; };
 		B15D0C2C1720A4D1008B0CA2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B15D0C2B1720A4D1008B0CA2 /* CoreGraphics.framework */; };
@@ -39,6 +41,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B13375BD173552B90017DCF8 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		B13375BE173552B90017DCF8 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		B13375C0173559810017DCF8 /* test.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = test.plist; sourceTree = "<group>"; };
 		B15D0C241720A4D1008B0CA2 /* CrossmediaDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrossmediaDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B15D0C271720A4D1008B0CA2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B15D0C291720A4D1008B0CA2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -164,6 +169,8 @@
 				B15D0C4B1720A678008B0CA2 /* MediaController.m */,
 				B15D0C4D1720A6B4008B0CA2 /* FeedParser.h */,
 				B15D0C4E1720A6B4008B0CA2 /* FeedParser.m */,
+				B13375BD173552B90017DCF8 /* DataManager.h */,
+				B13375BE173552B90017DCF8 /* DataManager.m */,
 				B15D0C3F1720A4D1008B0CA2 /* MainStoryboard.storyboard */,
 				B15D0C2E1720A4D1008B0CA2 /* Supporting Files */,
 				B15D0C9017233782008B0CA2 /* Feed.h */,
@@ -185,6 +192,7 @@
 				B15D0C391720A4D1008B0CA2 /* Default.png */,
 				B15D0C3B1720A4D1008B0CA2 /* Default@2x.png */,
 				B15D0C3D1720A4D1008B0CA2 /* Default-568h@2x.png */,
+				B13375C0173559810017DCF8 /* test.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -288,6 +296,7 @@
 				B15D0C3E1720A4D1008B0CA2 /* Default-568h@2x.png in Resources */,
 				B15D0C411720A4D1008B0CA2 /* MainStoryboard.storyboard in Resources */,
 				B1738E9B17288BE200F6EF0A /* FacebookSDKResources.bundle in Resources */,
+				B13375C1173559810017DCF8 /* test.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,6 +321,7 @@
 				B15D0CA717249E5C008B0CA2 /* FeedItemViewCell.m in Sources */,
 				B1738EA81728951600F6EF0A /* FacebookHandler.m in Sources */,
 				B1738EAB17289A1E00F6EF0A /* SettingsViewController.m in Sources */,
+				B13375BF173552B90017DCF8 /* DataManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

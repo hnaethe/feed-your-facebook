@@ -22,12 +22,15 @@
 BOOL didEndFeedHeader;
 BOOL foundTitleForFeed;
 NSString *currentlyParsedText;
+NSString *resultText;
+int tagDepth;
 
 - (void)parseXMLFileFromFeed:(Feed *)rssFeed
 {
     self.feed = rssFeed;
     didEndFeedHeader = NO;
     foundTitleForFeed = NO;
+    tagDepth = 0;
     NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:feed.url];
     [parser setDelegate:self];
     [parser parse];
@@ -36,6 +39,9 @@ NSString *currentlyParsedText;
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict
 {
+    tagDepth++;
+    NSLog(@"Started element: %@ with depth: %d",elementName, tagDepth);
+    
     if([elementName isEqualToString:@"item"])
     {
         feedItem = [[FeedItem alloc] init];
@@ -45,69 +51,61 @@ NSString *currentlyParsedText;
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-    currentlyParsedText = string;
+    //if([string isEqualToString:@""] || [string isEqualToString:@" "]) return;
+    currentlyParsedText = string; //bricht teilweise bei äöü ab, deswegen konkatenieren
 }
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
+    tagDepth--;
+    resultText = currentlyParsedText;
+    currentlyParsedText = @"";
 
     if(!didEndFeedHeader)
     {
 
         if([elementName isEqualToString:@"title"] && !foundTitleForFeed)
         {
-            feed.title = currentlyParsedText;
+            feed.title = resultText;
             foundTitleForFeed = YES;
             return;
         }
         
         if([elementName isEqualToString:@"link"])
         {
-            feed.linkToWebsite = currentlyParsedText;
+            feed.linkToWebsite = resultText;
             return;
         }
         
         if([elementName isEqualToString:@"description"])
         {
-            feed.description = currentlyParsedText;
+            feed.description = resultText;
             return;
         }
         
         if([elementName isEqualToString:@"pubDate"])
         {
             
-            feed.pubDate = [self dateForString:currentlyParsedText];
+            feed.pubDate = [self dateForString:resultText];
             return;
         }
         
         if([elementName isEqualToString:@"lastBuildDate"])
         {
-            feed.lastBuildDate = [self dateForString:currentlyParsedText];
+            feed.lastBuildDate = [self dateForString:resultText];
             return;
         }
         
         if([elementName isEqualToString:@"url"])
         {
-            feed.imageURL = [NSURL URLWithString:currentlyParsedText];
+            feed.imageURL = [NSURL URLWithString:resultText];
             
             // this is done synchronously so consider this to be lame as hell!
            /* NSData *data = [NSData dataWithContentsOfURL:feed.imageURL];
             feed.image = [[UIImage alloc] initWithData:data];*/
             return;
         }
-        
-        if([elementName isEqualToString:@"width"])
-        {
-            feed.imageWidth = @([currentlyParsedText intValue]);
-            return;
-        }
-        
-        if([elementName isEqualToString:@"height"])
-        {
-            feed.imageHeight = @([currentlyParsedText intValue]);
-            return;
-        }
-        
+    
         return;
     }
     
@@ -119,25 +117,27 @@ NSString *currentlyParsedText;
     {
         if([elementName isEqualToString:@"title"])
         {
-            feedItem.title = currentlyParsedText;
+            feedItem.title = resultText;
         }
         
         if([elementName isEqualToString:@"link"])
         {
-            feedItem.link = currentlyParsedText;
+            feedItem.link = resultText;
         }
         
         if([elementName isEqualToString:@"description"])
         {
-            feedItem.description = currentlyParsedText;
+            feedItem.description = resultText;
         }
         
         if([elementName isEqualToString:@"pubDate"])
         {
             
-            feedItem.pubDate = [self dateForString:currentlyParsedText];
+            feedItem.pubDate = [self dateForString:resultText];
         }
     }
+    
+    NSLog(@"Tiefe für Element %@ ist %d", elementName, tagDepth);
 }
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser

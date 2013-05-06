@@ -13,7 +13,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="2" kind="relationship" relationship="rootViewController" id="twH-l1-gUc"/>
+                        <segue destination="2" kind="relationship" relationship="rootViewController" id="5sr-Tj-RsZ"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cak-cz-gvd" userLabel="First Responder" sceneMemberID="firstResponder"/>

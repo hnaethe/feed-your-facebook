@@ -12,11 +12,15 @@
 extern NSString *const FBUserDidLoginNotification;
 extern NSString *const FBUserDidLogoutNotification;
 
+@class FeedItem;
 @interface FacebookHandler : NSObject
 
 @property (nonatomic, strong, readonly) NSDictionary<FBGraphUser> *fbUser;
 
 + (id)sharedInstance;
+
+- (void)publishStoryWithFeedItem:(FeedItem *)item;
+
 
 - (BOOL)isLoggedIn;
 

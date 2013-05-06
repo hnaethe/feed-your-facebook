@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface Feed : NSObject
+@property (nonatomic, assign) BOOL isParsing;
+
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSURL *url;
 
@@ -17,8 +19,6 @@
 @property (nonatomic, strong) NSDate *pubDate;
 @property (nonatomic, strong) NSDate *lastBuildDate;
 
-@property (nonatomic, strong) NSNumber *imageWidth;
-@property (nonatomic, strong) NSNumber *imageHeight;
 @property (nonatomic, strong) NSURL *imageURL;
 @property (nonatomic, strong) UIImage *image;
 

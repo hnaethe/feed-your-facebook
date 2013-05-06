@@ -11,6 +11,7 @@
 #import "FeedItem.h"
 #import "FeedItemViewCell.h"
 #import "MediaController.h"
+#import "FacebookHandler.h"
 
 @interface FeedItemTableViewController ()
 @property (nonatomic, strong) UITableView *tableView;
@@ -170,12 +171,12 @@
 
 - (void)tableView:(UITableView *)atableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    /*[atableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    Feed *feed = [self.feeds objectAtIndex:indexPath.row];
-    [[MediaController sharedInstance] setSelectedFeed:feed];
     
-    [self performSegueWithIdentifier:@"feedItemSegue" sender:self];*/
+    [atableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    FeedItem *feedItem = [feed.feedItems objectAtIndex:indexPath.row];
+    [[FacebookHandler sharedInstance] publishStoryWithFeedItem:feedItem];
 }
 
 - (void)didTouchSettings:(id)sender
