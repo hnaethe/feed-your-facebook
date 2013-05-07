@@ -13,8 +13,10 @@
 
 - (id)initWithFileName:(NSString *)fileName;
 
+- (void)resetStore;
+
 - (void)saveFeed:(Feed *)feed;
 
-- (NSMutableDictionary *)loadFeeds;
+- (NSMutableArray *)loadFeeds;
 
 @end

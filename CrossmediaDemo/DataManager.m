@@ -35,11 +35,10 @@
     if([[NSFileManager defaultManager] fileExistsAtPath:path])
         return path;
     
-    path = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"plist"];
-    if([[NSFileManager defaultManager] fileExistsAtPath:path])
-        return path;
+    NSLog(@"WARNING: Could not find file %@ - creating a new one", fileName);
     
-    NSLog(@"ERROR: Could not find file %@", fileName);
+    NSMutableDictionary *rootDictionary = [[NSMutableDictionary alloc] init];
+    [rootDictionary writeToFile:path atomically:YES];
     
     return path;
 }
@@ -49,22 +48,31 @@
     //[NSFileManager defaultManager] createFileAtPath:filePath contents:<#(NSData *)#> attributes:
 }
 
+- (void)resetStore
+{
+    [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+}
+
 - (void)saveFeed:(Feed *)feed
 {
     NSMutableDictionary *dataDict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
-    [dataDict setObject:feed.url forKey:feed.url];
+    [dataDict setObject:feed.url.absoluteString forKey:feed.url.absoluteString];
     
-    [dataDict writeToFile:filePath atomically:YES];
+    BOOL success = [dataDict writeToFile:filePath atomically:YES];
+    if(!success)NSLog(@"WARN: Write to file %@ not successful.", filePath);
 }
 
-- (NSArray *)loadFeeds
+- (NSMutableArray *)loadFeeds
 {
-    
-    NSMutableArray *array = @[];
+    NSMutableArray *feeds = [[NSMutableArray alloc] init];
     NSDictionary *dataDict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     
-    
-    NSEnumerator
+    NSString *element = nil;
+    NSEnumerator *enumerator = dataDict.objectEnumerator;
+    while (element = [enumerator nextObject]) {
+        [feeds addObject:[[NSURL alloc] initWithString:element]];
+    }
+    return feeds;
 }
 
 

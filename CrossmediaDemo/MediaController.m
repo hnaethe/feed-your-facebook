@@ -10,9 +10,14 @@
 #import "Feed.h"
 #import "DataManager.h"
 
+@interface MediaController ()
+@property (nonatomic, strong) DataManager *dataManager;
+@end
+
 @implementation MediaController
 @synthesize feeds;
 @synthesize selectedFeed;
+@synthesize dataManager;
 
 + (id)sharedInstance
 {
@@ -70,17 +75,17 @@
 {
     feeds = [[NSMutableArray alloc] init];
     
-    NSMutableArray *loadedFeedURLs = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFeeds"];
+    if(!dataManager)
+    {
+         dataManager = [[DataManager alloc] initWithFileName:@"test.plist"];
+    }
+    
+    NSMutableArray *loadedFeedURLs = [dataManager loadFeeds];
     if([loadedFeedURLs count] > 0)
     {
-        for (NSString *urlString in loadedFeedURLs) {
-            Feed * feed = [[Feed alloc] initWithURL:[[NSURL alloc] initWithString:urlString]];
+        for (NSURL *url in loadedFeedURLs) {
+            Feed * feed = [[Feed alloc] initWithURL:url];
             [feeds addObject:feed];
-        }
-        
-        DataManager *manager = [[DataManager alloc] initWithFileName:@"test.plist"];
-        for (Feed *feed in feeds) {
-            [manager saveFeed:feed];
         }
     }
     else
@@ -90,6 +95,9 @@
         
         Feed * feed2 = [[Feed alloc] initWithURL:[[NSURL alloc] initWithString:@"http://www.spiegel.de/schlagzeilen/tops/index.rss"]];
         [feeds addObject:feed2];
+        
+        [dataManager saveFeed:feed];
+        [dataManager saveFeed:feed2];
     }
     
     /*Feed *feed = [[Feed alloc] initWithURL:[[NSURL alloc] initWithString:@"http://www.mountainpanoramas.com/news.rss" ]];
@@ -100,13 +108,9 @@
 
 - (void)saveFeeds
 {
-    NSMutableArray *feedURLs = [[NSMutableArray alloc] initWithCapacity:[feeds count]];
     for (Feed *feed in feeds) {
-        [feedURLs addObject:feed.url.absoluteString];
+        [dataManager saveFeed:feed];
     }
-    
-    [[NSUserDefaults standardUserDefaults] setObject:feedURLs forKey:@"RSSFeeds"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 
