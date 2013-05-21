@@ -8,10 +8,16 @@
 
 #import "MediaController.h"
 #import "Feed.h"
+#import "DataManager.h"
+
+@interface MediaController ()
+@property (nonatomic, strong) DataManager *dataManager;
+@end
 
 @implementation MediaController
 @synthesize feeds;
 @synthesize selectedFeed;
+@synthesize dataManager;
 
 + (id)sharedInstance
 {
@@ -37,14 +43,19 @@
 
 - (void)startParsingFeed:(Feed *)feed
 {
-     FeedParser *parser = [[FeedParser alloc] init];
+    feed.isParsing = YES;
+    
+    FeedParser *parser = [[FeedParser alloc] init];
     parser.delegate = self;
-
+    
+    [feed.feedItems removeAllObjects];
     [parser parseXMLFileFromFeed:feed];
 }
 
 - (void)parserDidFinish:(FeedParser *)parser
 {
+    parser.feed.isParsing = NO;
+    
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:parser.feed,@"feed", nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"NewRSSData" object:nil userInfo:dict];
 }
@@ -64,13 +75,29 @@
 {
     feeds = [[NSMutableArray alloc] init];
     
-    NSMutableArray *loadedFeedURLs = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFeeds"];
-    if(loadedFeedURLs)
+    if(!dataManager)
     {
-        for (NSString *urlString in loadedFeedURLs) {
-            Feed * feed = [[Feed alloc] initWithURL:[[NSURL alloc] initWithString:urlString]];
+         dataManager = [[DataManager alloc] initWithFileName:@"test.plist"];
+    }
+    
+    NSMutableArray *loadedFeedURLs = [dataManager loadFeeds];
+    if([loadedFeedURLs count] > 0)
+    {
+        for (NSURL *url in loadedFeedURLs) {
+            Feed * feed = [[Feed alloc] initWithURL:url];
             [feeds addObject:feed];
         }
+    }
+    else
+    {
+        Feed * feed = [[Feed alloc] initWithURL:[[NSURL alloc] initWithString:@"http://www.mountainpanoramas.com/news.rss"]];
+        [feeds addObject:feed];
+        
+        Feed * feed2 = [[Feed alloc] initWithURL:[[NSURL alloc] initWithString:@"http://www.spiegel.de/schlagzeilen/tops/index.rss"]];
+        [feeds addObject:feed2];
+        
+        [dataManager saveFeed:feed];
+        [dataManager saveFeed:feed2];
     }
     
     /*Feed *feed = [[Feed alloc] initWithURL:[[NSURL alloc] initWithString:@"http://www.mountainpanoramas.com/news.rss" ]];
@@ -81,13 +108,9 @@
 
 - (void)saveFeeds
 {
-    NSMutableArray *feedURLs = [[NSMutableArray alloc] initWithCapacity:[feeds count]];
     for (Feed *feed in feeds) {
-        [feedURLs addObject:feed.url.absoluteString];
+        [dataManager saveFeed:feed];
     }
-    
-    [[NSUserDefaults standardUserDefaults] setObject:feedURLs forKey:@"RSSFeeds"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 

@@ -10,6 +10,9 @@
 #import "FeedItem.h"
 
 @implementation Feed
+
+@synthesize isParsing;
+
 @synthesize title;
 @synthesize url;
 
@@ -19,8 +22,6 @@
 @synthesize lastBuildDate;
 
 @synthesize image;
-@synthesize imageWidth;
-@synthesize imageHeight;
 @synthesize imageURL;
 
 @synthesize feedItems;
@@ -30,6 +31,7 @@
 {
     if((self = [super init]))
     {
+        self.isParsing = NO;
         self.url = feedUrl;
         self.feedItems = [[NSMutableArray alloc] init];
     }
@@ -38,32 +40,30 @@
 
 - (BOOL)hasNotBeenParsed
 {
-    if(!title) return YES;
-    if(!linkToWebsite)return YES;
-    if(!description)return YES;
-    if(!pubDate) return YES;
-    if(!lastBuildDate) return YES;
-    if(!imageURL) return YES;
-    if([feedItems count] == 0) return YES;
+    if(title) return NO;
+    if(linkToWebsite)return NO;
+    if(description)return NO;
+    if(pubDate) return NO;
+    if(lastBuildDate) return NO;
+    if(imageURL) return NO;
     
-    return NO;
+    return YES;
 }
 
 - (void)stringValue
 {
-    
+    NSLog(@"-----Feed-----");
+    NSLog(@"URL: %@", url);
     NSLog(@"title: %@", title);
     NSLog(@"link: %@", linkToWebsite);
     NSLog(@"description: %@", description);
     NSLog(@"pubDate: %@", pubDate);
     NSLog(@"lastBuildDate: %@", lastBuildDate);
-    NSLog(@"imageWidth: %@", imageWidth);
-    NSLog(@"imageHeight: %@", imageHeight);
     NSLog(@"imageURL: %@", imageURL);
     
     
     for (FeedItem *item in feedItems) {
-        [item stringValue];
+        //[item stringValue];
     }
 }
 @end

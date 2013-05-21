@@ -16,6 +16,15 @@
 @synthesize image;
 @synthesize imageURL;
 
+- (id)init
+{
+    self = [super init];
+    if(self)
+    {
+        self.imageURL = [NSURL URLWithString:@"http://www.mountainpanoramas.com/___p/_panos/2012_V4/2012_V4_t.png"];
+    }
+    return self;
+}
 
 - (void)stringValue
 {
