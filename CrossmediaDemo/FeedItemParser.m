@@ -6,15 +6,15 @@
 //  Copyright (c) 2013 Hendrik Näther. All rights reserved.
 //
 
-#import "FeedParser.h"
+#import "FeedItemParser.h"
 #import "Feed.h"
 #import "FeedItem.h"
 
-@interface FeedParser()
+@interface FeedItemParser()
 @property (nonatomic, strong) FeedItem *feedItem;
 @end
 
-@implementation FeedParser
+@implementation FeedItemParser
 @synthesize delegate;
 @synthesize feed;
 @synthesize feedItem;
@@ -25,7 +25,30 @@ NSString *currentlyParsedText;
 NSString *resultText;
 int tagDepth;
 
-- (void)parseXMLFileFromFeed:(Feed *)rssFeed
+/*
+ rss
+    channel
+        title 
+        link
+        description
+        language
+        pubDate
+        lastBuildDate
+        image
+            title
+            link
+            url
+        
+        item
+            title
+            link
+            description ->img in CDATA
+            pubDate
+            content:encoded ->img
+            enclosure ->img
+ */
+
+- (void)parseFeedItemsFromFeed:(Feed *)rssFeed
 {
     self.feed = rssFeed;
     didEndFeedHeader = NO;
@@ -109,6 +132,10 @@ int tagDepth;
         return;
     }
     
+    
+    
+    
+    
     if([elementName isEqualToString:@"item"])
     {
         [feed.feedItems addObject:feedItem];
@@ -142,8 +169,7 @@ int tagDepth;
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser
 {
-    [feed stringValue];
-    [delegate parserDidFinish:self];
+    [delegate feedItemParserDidFinish:self];
 }
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
@@ -151,6 +177,20 @@ int tagDepth;
     NSString *errorString = [NSString stringWithFormat:@"Error code %i", [parseError code]];
     NSLog(@"Error parsing XML: %@", errorString);
     
+}
+
+- (NSString *)urlFromString:(NSString *)string
+{
+    NSError *error = NULL;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(http://|https://).+(jpg|png)"
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:&error];
+    
+    NSArray *matches = [regex matchesInString:string options:0 range:NSMakeRange(0, [string length])];
+    NSTextCheckingResult *match = [matches objectAtIndex:0];
+    NSString *matchString = [string substringWithRange:[match range]];
+    
+    return matchString;
 }
 
 - (NSDate *)dateForString:(NSString*)dateString

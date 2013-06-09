@@ -41,18 +41,17 @@
     return self;
 }
 
-- (void)startParsingFeed:(Feed *)feed
+- (void)startParsingChannel:(Feed *)feed
 {
     feed.isParsing = YES;
     
-    FeedParser *parser = [[FeedParser alloc] init];
+    ChannelParser *parser = [[ChannelParser alloc] init];
     parser.delegate = self;
     
-    [feed.feedItems removeAllObjects];
-    [parser parseXMLFileFromFeed:feed];
+    [parser parseChannelFromFeed:feed];
 }
 
-- (void)parserDidFinish:(FeedParser *)parser
+- (void)channelParserDidFinish:(ChannelParser *)parser
 {
     parser.feed.isParsing = NO;
     
@@ -60,24 +59,45 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"NewRSSData" object:nil userInfo:dict];
 }
 
-- (void)refreshAllFeeds
+
+- (void)startParsingFeedItems:(Feed *)feed
+{
+    feed.isParsing = YES;
+    
+    FeedItemParser *parser = [[FeedItemParser alloc] init];
+    parser.delegate = self;
+    
+    [feed.feedItems removeAllObjects];
+    
+    [parser parseFeedItemsFromFeed:feed];
+}
+
+- (void)feedItemParserDidFinish:(FeedItemParser *)parser
+{
+    parser.feed.isParsing = NO;
+}
+
+- (void)refreshAllChannels
 {
     for (Feed *feed in feeds) {
-        FeedParser *parser = [[FeedParser alloc] init];
-        parser.delegate = self;
-        
-        [feed.feedItems removeAllObjects];
-        [parser parseXMLFileFromFeed:feed];
+        [self startParsingChannel:feed];
     }
 }
 
-- (void)loadFeeds
+- (void)refreshAllFeedItems
+{
+    for (Feed *feed in feeds) {
+        [self startParsingFeedItems:feed];
+    }
+}
+
+- (void)loadFeedsFromData
 {
     feeds = [[NSMutableArray alloc] init];
     
     if(!dataManager)
     {
-         dataManager = [[DataManager alloc] initWithFileName:@"test.plist"];
+         dataManager = [[DataManager alloc] initWithFileName:@"data.plist"];
     }
     
     NSMutableArray *loadedFeedURLs = [dataManager loadFeeds];
@@ -99,11 +119,6 @@
         [dataManager saveFeed:feed];
         [dataManager saveFeed:feed2];
     }
-    
-    /*Feed *feed = [[Feed alloc] initWithURL:[[NSURL alloc] initWithString:@"http://www.mountainpanoramas.com/news.rss" ]];
-     
-     [feeds addObject:feed];*/
-
 }
 
 - (void)saveFeeds

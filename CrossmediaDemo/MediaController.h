@@ -7,19 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "FeedParser.h"
+#import "FeedItemParser.h"
+#import "ChannelParser.h"
+
 @class Feed;
-@interface MediaController : NSObject <FeedParserProtocol>
+@interface MediaController : NSObject <FeedItemParserProtocol, ChannelParserProtocol>
 @property (nonatomic, strong) NSMutableArray *feeds;
 @property (nonatomic, strong) Feed *selectedFeed;
 
 + (id)sharedInstance;
 
-- (void)startParsingFeed:(Feed *)feed;
+- (void)startParsingChannel:(Feed *)feed;
 
-- (void)refreshAllFeeds;
+- (void)refreshAllChannels;
 
-- (void)loadFeeds;
+- (void)refreshAllFeedItems;
+
+- (void)loadFeedsFromData;
 
 - (void)saveFeeds;
 

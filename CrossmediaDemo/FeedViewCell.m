@@ -111,7 +111,8 @@
     if(!formatter)
     {
         formatter  = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"dd. MMMM, HH:mm:ss"];
+        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"de_DE"]];
+        [formatter setDateFormat:@"dd. MMMM, HH:mm"];
         
     }
     pubDateLabel.text = [formatter stringFromDate:feed.pubDate];

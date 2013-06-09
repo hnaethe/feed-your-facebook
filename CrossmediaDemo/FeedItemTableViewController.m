@@ -20,9 +20,9 @@
 @end
 
 @implementation FeedItemTableViewController
-@synthesize tableView;
-@synthesize imageDownloadsInProgress;
-@synthesize feed;
+@synthesize tableView = _tableView;
+@synthesize imageDownloadsInProgress = _imageDownloadsInProgress;
+@synthesize feed = _feed;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -37,12 +37,12 @@
 {
     [super viewDidLoad];
     
-    tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-    tableView.dataSource = self;
-    tableView.delegate = self;
-    [self.view addSubview:tableView];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    [self.view addSubview:self.tableView];
     
-    imageDownloadsInProgress = [[NSMutableDictionary alloc] init];
+    self.imageDownloadsInProgress = [[NSMutableDictionary alloc] init];
     
     self.navigationItem.title = @"Feeds";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self  action:@selector(didTouchSettings:)];
@@ -65,7 +65,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [feed.feedItems count];
+    return [self.feed.feedItems count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -74,7 +74,7 @@
     static NSString *feedItemCell = @"RSSFeedItemCell";
     FeedItemViewCell *cell = [tableView dequeueReusableCellWithIdentifier:feedItemCell];
     
-    FeedItem *feedItem = [feed.feedItems objectAtIndex:indexPath.row];
+    FeedItem *feedItem = [self.feed.feedItems objectAtIndex:indexPath.row];
     
     if (cell == nil) {
         cell = [[FeedItemViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:feedItemCell];
@@ -99,14 +99,14 @@
 
 - (void)startIconDownload:(FeedItem *)feed forIndexPath:(NSIndexPath *)indexPath
 {
-    /*IconDownloader *iconDownloader = [imageDownloadsInProgress objectForKey:indexPath];
+    /*IconDownloader *iconDownloader = [self.imageDownloadsInProgress objectForKey:indexPath];
     if (iconDownloader == nil)
     {
         iconDownloader = [[IconDownloader alloc] init];
         iconDownloader.feed = feed;
         iconDownloader.indexPathInTableView = indexPath;
         iconDownloader.delegate = self;
-        [imageDownloadsInProgress setObject:iconDownloader forKey:indexPath];
+        [self.imageDownloadsInProgress setObject:iconDownloader forKey:indexPath];
         [iconDownloader startDownload];
     }*/
 }
@@ -132,7 +132,7 @@
 // called by our ImageDownloader when an icon is ready to be displayed
 - (void)imageDidLoad:(NSIndexPath *)indexPath
 {
-    /*IconDownloader *iconDownloader = [imageDownloadsInProgress objectForKey:indexPath];
+    /*IconDownloader *iconDownloader = [self.imageDownloadsInProgress objectForKey:indexPath];
     if (iconDownloader != nil)
     {
         FeedViewCell *cell = ((FeedViewCell *)[self.tableView cellForRowAtIndexPath:iconDownloader.indexPathInTableView]);
@@ -147,7 +147,7 @@
     
     // Remove the IconDownloader from the in progress list.
     // This will result in it being deallocated.
-    [imageDownloadsInProgress removeObjectForKey:indexPath];*/
+    [self.imageDownloadsInProgress removeObjectForKey:indexPath];*/
 }
 
 #pragma mark -
@@ -169,13 +169,13 @@
 
 #pragma mark - Segue Stuff
 
-- (void)tableView:(UITableView *)atableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     
-    [atableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    FeedItem *feedItem = [feed.feedItems objectAtIndex:indexPath.row];
+    FeedItem *feedItem = [self.feed.feedItems objectAtIndex:indexPath.row];
     [[FacebookHandler sharedInstance] publishStoryWithFeedItem:feedItem];
 }
 

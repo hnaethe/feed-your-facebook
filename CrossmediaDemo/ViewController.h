@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FeedParser.h"
+#import "FeedItemParser.h"
 
 @interface ViewController : UIViewController
 

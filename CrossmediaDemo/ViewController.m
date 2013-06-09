@@ -18,7 +18,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    [[MediaController sharedInstance] loadFeeds];
+    [[MediaController sharedInstance] loadFeedsFromData];
     
     [self performSegueWithIdentifier:@"feedSegue" sender:self];
 }

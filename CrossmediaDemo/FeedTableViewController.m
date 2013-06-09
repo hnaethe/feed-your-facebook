@@ -19,9 +19,9 @@
 @end
 
 @implementation FeedTableViewController
-@synthesize tableView;
-@synthesize feeds;
-@synthesize imageDownloadsInProgress;
+@synthesize tableView = _tableView;
+@synthesize feeds = _feeds;
+@synthesize imageDownloadsInProgress = _imageDownloadsInProgress;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -40,12 +40,12 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self  action:@selector(didTouchRefresh:)];
     
-    tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    tableView.dataSource = self;
-    tableView.delegate = self;
-    [self.view addSubview:tableView];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    [self.view addSubview:self.tableView];
     
-    imageDownloadsInProgress = [[NSMutableDictionary alloc] init];
+    self.imageDownloadsInProgress = [[NSMutableDictionary alloc] init];
     
     self.navigationItem.title = @"Feed-Übersicht";
     [self.navigationController.navigationBar setTintColor:[UIColor orangeColor]];
@@ -54,7 +54,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didParseRSSFeed:) name:@"NewRSSData" object:nil];
     
-    feeds = [[MediaController sharedInstance] feeds];
+    self.feeds = [[MediaController sharedInstance] feeds];
 }
 
 - (void)didReceiveMemoryWarning
@@ -72,7 +72,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [feeds count];
+    return [self.feeds count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -99,7 +99,7 @@
     
     if(feed.hasNotBeenParsed && !feed.isParsing)
     {
-        [[MediaController sharedInstance] performSelectorInBackground:@selector(startParsingFeed:) withObject:feed];
+        [[MediaController sharedInstance] performSelectorInBackground:@selector(startParsingChannel:) withObject:feed];
     }
     
     return cell;
@@ -110,14 +110,14 @@
 
 - (void)startIconDownload:(Feed *)feed forIndexPath:(NSIndexPath *)indexPath
 {
-    IconDownloader *iconDownloader = [imageDownloadsInProgress objectForKey:indexPath];
+    IconDownloader *iconDownloader = [self.imageDownloadsInProgress objectForKey:indexPath];
     if (iconDownloader == nil)
     {
         iconDownloader = [[IconDownloader alloc] init];
         iconDownloader.feed = feed;
         iconDownloader.indexPathInTableView = indexPath;
         iconDownloader.delegate = self;
-        [imageDownloadsInProgress setObject:iconDownloader forKey:indexPath];
+        [self.imageDownloadsInProgress setObject:iconDownloader forKey:indexPath];
         [iconDownloader startDownload];
     }
 }
@@ -143,22 +143,19 @@
 // called by our ImageDownloader when an icon is ready to be displayed
 - (void)imageDidLoad:(NSIndexPath *)indexPath
 {
-    IconDownloader *iconDownloader = [imageDownloadsInProgress objectForKey:indexPath];
+    IconDownloader *iconDownloader = [self.imageDownloadsInProgress objectForKey:indexPath];
     if (iconDownloader != nil)
     {
-        FeedViewCell *cell = ((FeedViewCell *)[self.tableView cellForRowAtIndexPath:iconDownloader.indexPathInTableView]);
+        //FeedViewCell *cell = ((FeedViewCell *)[self.tableView cellForRowAtIndexPath:iconDownloader.indexPathInTableView]);
         
         // Display the newly loaded image
         //[cell reloadImage:iconDownloader.feed.image];
-        
-        NSMutableArray *arrayForIndexPaths = [[NSMutableArray alloc] init];
-        [arrayForIndexPaths addObject:indexPath];
-        [tableView reloadRowsAtIndexPaths:arrayForIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
     
     // Remove the IconDownloader from the in progress list.
     // This will result in it being deallocated.
-    [imageDownloadsInProgress removeObjectForKey:indexPath];
+    [self.imageDownloadsInProgress removeObjectForKey:indexPath];
 }
 
 #pragma mark -
@@ -181,9 +178,11 @@
 #pragma mark - Notification stuff
 - (void)didParseRSSFeed:(NSNotification*)notification
 {
-    //Feed *feed = [notification.userInfo objectForKey:@"feed"];
-    //[tableView reloadSections:0 withRowAnimation:UITableViewRowAnimationAutomatic];
-    [tableView reloadData];
+    Feed *feed = [notification.userInfo objectForKey:@"feed"];
+    int row = [self.feeds indexOfObject:feed];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 #pragma mark - Segue Stuff
@@ -208,7 +207,7 @@
 
 - (void)didTouchRefresh:(id)sender
 {
-    [[MediaController sharedInstance] performSelectorInBackground:@selector(refreshAllFeeds) withObject:nil];
+    [[MediaController sharedInstance] performSelectorInBackground:@selector(refreshAllChannels) withObject:nil];
 }
 
 @end
