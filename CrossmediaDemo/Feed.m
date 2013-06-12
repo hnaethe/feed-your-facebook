@@ -21,9 +21,6 @@
 @synthesize pubDate;
 @synthesize lastBuildDate;
 
-@synthesize image;
-@synthesize imageURL;
-
 @synthesize feedItems;
 
 
@@ -34,6 +31,7 @@
         self.isParsing = NO;
         self.url = feedUrl;
         self.feedItems = [[NSMutableArray alloc] init];
+        self.iconSize = 43;
     }
     return self;
 }
@@ -45,7 +43,7 @@
     if(description)return NO;
     if(pubDate) return NO;
     if(lastBuildDate) return NO;
-    if(imageURL) return NO;
+    if(self.imageURL) return NO;
     
     return YES;
 }
@@ -59,7 +57,7 @@
     NSLog(@"description: %@", description);
     NSLog(@"pubDate: %@", pubDate);
     NSLog(@"lastBuildDate: %@", lastBuildDate);
-    NSLog(@"imageURL: %@", imageURL);
+    NSLog(@"imageURL: %@", self.imageURL);
     
     
     for (FeedItem *item in feedItems) {

@@ -47,7 +47,31 @@
     self.navigationItem.title = @"Feeds";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self  action:@selector(didTouchSettings:)];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReloadFeeds:) name:@"NewFeedItemData" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFetchFeedItem:) name:@"NewFeedItem" object:nil];
+    
     self.feed = [[MediaController sharedInstance] selectedFeed];
+    [[MediaController sharedInstance] performSelectorInBackground:@selector(startParsingFeedItems:) withObject:self.feed];
+}
+
+- (void)didReloadFeeds:(NSNotification *)notification
+{
+
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (void)didFetchFeedItem:(NSNotification *)notification
+{
+    /*FeedItem *item = (FeedItem*)[notification.userInfo objectForKey:@"feedItem"];
+    int index = [self.feed.feedItems indexOfObject:item];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    if([self.feed.feedItems count] == (index + 1))
+    {
+        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }*/
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,72 +106,71 @@
     
     [cell setFeedItem:feedItem];
     
-    /*if (!feedItem.image && feed.imageURL)
+    if (!feedItem.image && feedItem.imageURL)
     {
         if (self.tableView.dragging == NO && self.tableView.decelerating == NO)
         {
-            [self startIconDownload:feed forIndexPath:indexPath];
+            [self startIconDownload:feedItem forIndexPath:indexPath];
         }
     }
     
-     */
     return cell;
 }
 
 #pragma mark -
 #pragma mark Table cell image support
 
-- (void)startIconDownload:(FeedItem *)feed forIndexPath:(NSIndexPath *)indexPath
+- (void)startIconDownload:(FeedItem *)feedItem forIndexPath:(NSIndexPath *)indexPath
 {
-    /*IconDownloader *iconDownloader = [self.imageDownloadsInProgress objectForKey:indexPath];
+    IconDownloader *iconDownloader = [self.imageDownloadsInProgress objectForKey:indexPath];
     if (iconDownloader == nil)
     {
         iconDownloader = [[IconDownloader alloc] init];
-        iconDownloader.feed = feed;
+        iconDownloader.imageObject = feedItem;
         iconDownloader.indexPathInTableView = indexPath;
         iconDownloader.delegate = self;
         [self.imageDownloadsInProgress setObject:iconDownloader forKey:indexPath];
         [iconDownloader startDownload];
-    }*/
+    }
 }
 
 // this method is used in case the user scrolled into a set of cells that don't have their app icons yet
 - (void)loadImagesForOnscreenRows
 {
-   /* if ([self.feed.feedItems count] > 0)
+   if ([self.feed.feedItems count] > 0)
     {
         NSArray *visiblePaths = [self.tableView indexPathsForVisibleRows];
         for (NSIndexPath *indexPath in visiblePaths)
         {
-            FeedItem *feedItem = [feed.feedItems objectAtIndex:indexPath.row];
+            FeedItem *feedItem = [self.feed.feedItems objectAtIndex:indexPath.row];
             
-            if (!feed.image && feed.imageURL) // avoid the icon download if the app already has an icon
+            if (!feedItem.image && feedItem.imageURL) // avoid the icon download if the app already has an icon
             {
-                [self startIconDownload:feed forIndexPath:indexPath];
+                [self startIconDownload:feedItem forIndexPath:indexPath];
             }
         }
-    }*/
+    }
 }
 
 // called by our ImageDownloader when an icon is ready to be displayed
 - (void)imageDidLoad:(NSIndexPath *)indexPath
 {
-    /*IconDownloader *iconDownloader = [self.imageDownloadsInProgress objectForKey:indexPath];
+    IconDownloader *iconDownloader = [self.imageDownloadsInProgress objectForKey:indexPath];
     if (iconDownloader != nil)
     {
-        FeedViewCell *cell = ((FeedViewCell *)[self.tableView cellForRowAtIndexPath:iconDownloader.indexPathInTableView]);
+        FeedItemViewCell *cell = ((FeedItemViewCell *)[self.tableView cellForRowAtIndexPath:iconDownloader.indexPathInTableView]);
         
         // Display the newly loaded image
         //[cell reloadImage:iconDownloader.feed.image];
         
         NSMutableArray *arrayForIndexPaths = [[NSMutableArray alloc] init];
         [arrayForIndexPaths addObject:indexPath];
-        [tableView reloadRowsAtIndexPaths:arrayForIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView reloadRowsAtIndexPaths:arrayForIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
     }
     
     // Remove the IconDownloader from the in progress list.
     // This will result in it being deallocated.
-    [self.imageDownloadsInProgress removeObjectForKey:indexPath];*/
+    [self.imageDownloadsInProgress removeObjectForKey:indexPath];
 }
 
 #pragma mark -
@@ -171,8 +194,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     FeedItem *feedItem = [self.feed.feedItems objectAtIndex:indexPath.row];

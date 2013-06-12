@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define kCellHeight 53
+#define kCellHeight 63
 
 @class FeedItem;
 @interface FeedItemViewCell : UITableViewCell

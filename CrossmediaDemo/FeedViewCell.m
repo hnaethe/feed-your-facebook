@@ -42,8 +42,7 @@
         
         
         imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 43, 43)];
-        imageView.backgroundColor = [UIColor orangeColor];
-        imageView.image = [UIImage imageNamed:@"song-placeholder.png"];
+        imageView.backgroundColor = [UIColor lightGrayColor];
         
         titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(61, 7, 220, 20)];
         [titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
@@ -120,6 +119,10 @@
     if(feed.image)
     {
         imageView.image = feed.image;
+    }
+    else
+    {
+        imageView.image = nil;
     }
     
     

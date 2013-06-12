@@ -2,30 +2,29 @@
 //  FeedTableViewController.m
 //  CrossmediaDemo
 //
-//  Created by Hendrik Näther on 21.04.13.
+//  Created by Hendrik Näther on 12.06.13.
 //  Copyright (c) 2013 Hendrik Näther. All rights reserved.
 //
 
 #import "FeedTableViewController.h"
-#import "FeedViewCell.h"
-
 #import "MediaController.h"
 #import "Feed.h"
+#import "FeedViewCell.h"
+
 
 @interface FeedTableViewController ()
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *feeds;
-@property (nonatomic, strong) NSMutableDictionary *imageDownloadsInProgress;
+
 @end
 
 @implementation FeedTableViewController
-@synthesize tableView = _tableView;
+
 @synthesize feeds = _feeds;
 @synthesize imageDownloadsInProgress = _imageDownloadsInProgress;
+@synthesize delegate = _delegate;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithStyle:(UITableViewStyle)style
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
     }
@@ -36,25 +35,19 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem.hidesBackButton = YES;
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self  action:@selector(didTouchRefresh:)];
-    
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-    [self.view addSubview:self.tableView];
-    
+    self.feeds = [[MediaController sharedInstance] feeds];
     self.imageDownloadsInProgress = [[NSMutableDictionary alloc] init];
-    
-    self.navigationItem.title = @"Feed-Übersicht";
-    [self.navigationController.navigationBar setTintColor:[UIColor orangeColor]];
-    
-	// Do any additional setup after loading the view.
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didParseRSSFeed:) name:@"NewRSSData" object:nil];
     
-    self.feeds = [[MediaController sharedInstance] feeds];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(refreshView:) forControlEvents:UIControlEventValueChanged];
+
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+ 
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -114,7 +107,7 @@
     if (iconDownloader == nil)
     {
         iconDownloader = [[IconDownloader alloc] init];
-        iconDownloader.feed = feed;
+        iconDownloader.imageObject = feed;
         iconDownloader.indexPathInTableView = indexPath;
         iconDownloader.delegate = self;
         [self.imageDownloadsInProgress setObject:iconDownloader forKey:indexPath];
@@ -183,6 +176,7 @@
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    [self.refreshControl endRefreshing];
 }
 
 #pragma mark - Segue Stuff
@@ -194,20 +188,21 @@
     Feed *feed = [self.feeds objectAtIndex:indexPath.row];
     [[MediaController sharedInstance] setSelectedFeed:feed];
     
-    [self performSegueWithIdentifier:@"feedItemSegue" sender:self];
+    if(self.delegate) [self.delegate userDidSelectARow];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+#pragma mark - Refresh Handler
+
+- (void)refresh
 {
-    if([[segue identifier] compare:@"feedItemSegue"] == 0)
-    {
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Zurück" style:UIBarButtonItemStylePlain target:nil action:nil];
-    }
+    [self refreshView: self.refreshControl];
 }
 
-- (void)didTouchRefresh:(id)sender
+- (void)refreshView:(UIRefreshControl *)refresh
 {
+    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Aktualisiere Daten...", nil)];
+    
     [[MediaController sharedInstance] performSelectorInBackground:@selector(refreshAllChannels) withObject:nil];
-}
 
+}
 @end

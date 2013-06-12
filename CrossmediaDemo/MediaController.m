@@ -41,6 +41,15 @@
     return self;
 }
 
+- (void)createFeedWithURL:(NSString *)url
+{
+    Feed * feed = [[Feed alloc] initWithURL:[NSURL URLWithString:url]];
+    [feeds addObject:feed];
+    feed = nil;
+    
+    [self startParsingChannel:feed];
+}
+
 - (void)startParsingChannel:(Feed *)feed
 {
     feed.isParsing = YES;
@@ -72,9 +81,18 @@
     [parser parseFeedItemsFromFeed:feed];
 }
 
+- (void)feedItemParserFinishedItem:(FeedItem *)feedItem
+{
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:feedItem,@"feedItem", nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"NewFeedItem" object:nil userInfo:dict];
+}
+
 - (void)feedItemParserDidFinish:(FeedItemParser *)parser
 {
     parser.feed.isParsing = NO;
+    
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:parser.feed,@"feed", nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"NewFeedItemData" object:nil userInfo:dict];
 }
 
 - (void)refreshAllChannels

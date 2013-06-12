@@ -10,11 +10,11 @@
 
 
 @protocol IconDownloaderDelegate;
-@class Feed;
+@class ImageObject;
 
 @interface IconDownloader : NSObject
 
-@property (nonatomic, strong) Feed *feed;
+@property (nonatomic, strong) ImageObject *imageObject;
 @property (nonatomic, strong) NSIndexPath *indexPathInTableView;
 @property (nonatomic, assign) id <IconDownloaderDelegate> delegate;
 

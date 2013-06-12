@@ -11,35 +11,23 @@
 #import "FeedItem.h"
 
 @interface FeedItemParser()
+@property (nonatomic, strong) NSString *currentlyParsedText;
+@property (nonatomic, strong) NSString *resultText;
+@property (nonatomic, assign) int depth, cachedDepth;
+@property (nonatomic, assign) BOOL foundItems;
 @property (nonatomic, strong) FeedItem *feedItem;
+
 @end
 
 @implementation FeedItemParser
-@synthesize delegate;
-@synthesize feed;
-@synthesize feedItem;
-
-BOOL didEndFeedHeader;
-BOOL foundTitleForFeed;
-NSString *currentlyParsedText;
-NSString *resultText;
-int tagDepth;
+@synthesize delegate = _delegate;
+@synthesize feed = _feed;
+@synthesize feedItem = _feedItem;
+@synthesize depth, cachedDepth;
+@synthesize foundItems;
 
 /*
- rss
-    channel
-        title 
-        link
-        description
-        language
-        pubDate
-        lastBuildDate
-        image
-            title
-            link
-            url
-        
-        item
+ item
             title
             link
             description ->img in CDATA
@@ -51,10 +39,11 @@ int tagDepth;
 - (void)parseFeedItemsFromFeed:(Feed *)rssFeed
 {
     self.feed = rssFeed;
-    didEndFeedHeader = NO;
-    foundTitleForFeed = NO;
-    tagDepth = 0;
-    NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:feed.url];
+    depth = 0;
+    self.resultText = @"";
+    foundItems = NO;
+    
+    NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:self.feed.url];
     [parser setDelegate:self];
     [parser parse];
 
@@ -62,114 +51,104 @@ int tagDepth;
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict
 {
-    tagDepth++;
-    NSLog(@"Started element: %@ with depth: %d",elementName, tagDepth);
-    
     if([elementName isEqualToString:@"item"])
     {
-        feedItem = [[FeedItem alloc] init];
-        didEndFeedHeader = YES;
+        foundItems = YES;
+        self.feedItem = [[FeedItem alloc] init];
+    }
+    
+    if(foundItems)
+    {
+        depth++;
+        NSLog(@"Started element: %@ with depth: %d",elementName, depth);
     }
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-    //if([string isEqualToString:@""] || [string isEqualToString:@" "]) return;
-    currentlyParsedText = string; //bricht teilweise bei äöü ab, deswegen konkatenieren
+    if(!foundItems) return;
+    
+    self.currentlyParsedText = string;
+    
+    if(cachedDepth == depth)
+    {
+        self.resultText = [self.resultText stringByAppendingString:self.currentlyParsedText];
+    }
+    else
+    {
+        self.resultText = self.currentlyParsedText;
+    }
+    
+    cachedDepth = depth;
 }
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
-    tagDepth--;
-    resultText = currentlyParsedText;
-    currentlyParsedText = @"";
-
-    if(!didEndFeedHeader)
-    {
-
-        if([elementName isEqualToString:@"title"] && !foundTitleForFeed)
-        {
-            feed.title = resultText;
-            foundTitleForFeed = YES;
-            return;
-        }
-        
-        if([elementName isEqualToString:@"link"])
-        {
-            feed.linkToWebsite = resultText;
-            return;
-        }
-        
-        if([elementName isEqualToString:@"description"])
-        {
-            feed.description = resultText;
-            return;
-        }
-        
-        if([elementName isEqualToString:@"pubDate"])
-        {
-            
-            feed.pubDate = [self dateForString:resultText];
-            return;
-        }
-        
-        if([elementName isEqualToString:@"lastBuildDate"])
-        {
-            feed.lastBuildDate = [self dateForString:resultText];
-            return;
-        }
-        
-        if([elementName isEqualToString:@"url"])
-        {
-            feed.imageURL = [NSURL URLWithString:resultText];
-            
-            // this is done synchronously so consider this to be lame as hell!
-           /* NSData *data = [NSData dataWithContentsOfURL:feed.imageURL];
-            feed.image = [[UIImage alloc] initWithData:data];*/
-            return;
-        }
-    
-        return;
-    }
-    
-    
-    
-    
+    if(!foundItems) return;
     
     if([elementName isEqualToString:@"item"])
     {
-        [feed.feedItems addObject:feedItem];
-    }
-    else
-    {
-        if([elementName isEqualToString:@"title"])
-        {
-            feedItem.title = resultText;
-        }
+        [self.feed.feedItems addObject:self.feedItem];
+        if(self.delegate) [self.delegate feedItemParserFinishedItem:self.feedItem];
         
-        if([elementName isEqualToString:@"link"])
-        {
-            feedItem.link = resultText;
-        }
-        
-        if([elementName isEqualToString:@"description"])
-        {
-            feedItem.description = resultText;
-        }
-        
-        if([elementName isEqualToString:@"pubDate"])
-        {
-            
-            feedItem.pubDate = [self dateForString:resultText];
-        }
+        self.resultText = @"";
+        depth--;
+        return;
     }
     
-    NSLog(@"Tiefe für Element %@ ist %d", elementName, tagDepth);
+    if([elementName isEqualToString:@"title"])
+    {
+        self.feedItem.title = self.resultText;
+        self.resultText = @"";
+        depth--;
+        return;
+    }
+        
+    if([elementName isEqualToString:@"link"])
+    {
+        self.feedItem.link = self.resultText;
+        self.resultText = @"";
+        depth--;
+        return;
+    }
+        
+    if([elementName isEqualToString:@"description"])
+    {
+        self.feedItem.description = self.resultText;
+        
+        
+        if(!self.feedItem.imageURL) [self parseImageIfPossible];
+        
+        self.resultText = @"";
+        depth--;
+        return;
+    }
+        
+    if([elementName isEqualToString:@"pubDate"])
+    {
+        self.feedItem.pubDate = [self dateForString:self.resultText];
+        self.resultText = @"";
+        depth--;
+        return;
+    }
+    
+    if([elementName isEqualToString:@"content:encoded"])
+    {
+        if(!self.feedItem.imageURL) [self parseImageIfPossible];
+    }
+    
+    if([elementName isEqualToString:@"enclosure"])
+    {
+        if(!self.feedItem.imageURL) [self parseImageIfPossible];
+    }
+
+    depth--;
+    cachedDepth = depth;
 }
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser
 {
-    [delegate feedItemParserDidFinish:self];
+    [self.delegate feedItemParserDidFinish:self];
 }
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
@@ -177,6 +156,15 @@ int tagDepth;
     NSString *errorString = [NSString stringWithFormat:@"Error code %i", [parseError code]];
     NSLog(@"Error parsing XML: %@", errorString);
     
+}
+
+- (void)parseImageIfPossible
+{
+    NSString *imageUrl = [self urlFromString:self.resultText];
+    if(imageUrl)
+    {
+        self.feedItem.imageURL = [NSURL URLWithString:imageUrl];
+    }
 }
 
 - (NSString *)urlFromString:(NSString *)string
@@ -187,6 +175,8 @@ int tagDepth;
                                                                              error:&error];
     
     NSArray *matches = [regex matchesInString:string options:0 range:NSMakeRange(0, [string length])];
+    if([matches count] == 0) return nil;
+    
     NSTextCheckingResult *match = [matches objectAtIndex:0];
     NSString *matchString = [string substringWithRange:[match range]];
     

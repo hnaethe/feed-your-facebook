@@ -17,7 +17,11 @@
 
 + (id)sharedInstance;
 
+- (void)createFeedWithURL:(NSString *)url;
+
 - (void)startParsingChannel:(Feed *)feed;
+
+- (void)startParsingFeedItems:(Feed *)feed;
 
 - (void)refreshAllChannels;
 

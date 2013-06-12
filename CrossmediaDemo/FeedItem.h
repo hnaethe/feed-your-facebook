@@ -7,14 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ImageObject.h"
 
-@interface FeedItem : NSObject
+@interface FeedItem : ImageObject
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *link;
 @property (nonatomic, strong) NSString *description;
 @property (nonatomic, strong) NSDate *pubDate;
-@property (nonatomic, strong) UIImage *image;
-@property (nonatomic, strong) NSURL *imageURL;
 
 - (void)stringValue;
 

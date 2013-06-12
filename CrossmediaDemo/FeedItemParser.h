@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 @class Feed;
+@class FeedItem;
+
 @protocol  FeedItemParserProtocol;
 @interface FeedItemParser : NSObject <NSXMLParserDelegate>
 
-@property (nonatomic, strong) id<FeedItemParserProtocol>delegate;
+@property (nonatomic, weak) id<FeedItemParserProtocol>delegate;
 
 - (void)parseFeedItemsFromFeed:(Feed *)rssFeed;
 
@@ -24,5 +26,7 @@
 @required
 
 - (void)feedItemParserDidFinish:(FeedItemParser *)parser;
+
+- (void)feedItemParserFinishedItem:(FeedItem *)feedItem;
 
 @end

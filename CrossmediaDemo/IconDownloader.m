@@ -9,16 +9,14 @@
 #import "IconDownloader.h"
 #import "Feed.h"
 
-#define kSmallIconSize 43
-
 @implementation IconDownloader
-@synthesize feed, indexPathInTableView, delegate;
+@synthesize imageObject, indexPathInTableView, delegate;
 
 - (void)startDownload
 {
     //NSURL *url = [[NSURL alloc] initWithString:feed.imageURL];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:feed.imageURL];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:imageObject.imageURL];
     [request setHTTPMethod:@"GET"];
     [request setTimeoutInterval:3];
     
@@ -33,19 +31,20 @@
 - (void)loadingImageReceivedResponse:(NSURLResponse *)response andData:(NSData *)data
 {
     UIImage *image = [[UIImage alloc] initWithData:data];
+    int iconSize = self.imageObject.iconSize;
     
-    if (image.size.width != kSmallIconSize || image.size.height != kSmallIconSize)
+    if (image.size.width != iconSize || image.size.height != iconSize)
 	{
-        CGSize itemSize = CGSizeMake(kSmallIconSize, kSmallIconSize);
+        CGSize itemSize = CGSizeMake(iconSize, iconSize);
 		UIGraphicsBeginImageContext(itemSize);
 		CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
 		[image drawInRect:imageRect];
-		self.feed.image = UIGraphicsGetImageFromCurrentImageContext();
+		self.imageObject.image = UIGraphicsGetImageFromCurrentImageContext();
 		UIGraphicsEndImageContext();
     }
     else
     {
-        self.feed.image = image;
+        self.imageObject.image = image;
     }
         
     // call our delegate and tell it that our icon is ready for display

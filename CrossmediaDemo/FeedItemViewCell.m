@@ -8,6 +8,7 @@
 
 #import "FeedItemViewCell.h"
 #import "FeedItem.h"
+#import "UIColor+Additions.h"
 
 @interface FeedItemViewCell ()
 @property (nonatomic, strong) UIImageView *imageView;
@@ -24,18 +25,22 @@
     if (self) {
         // Initialization code
         
-        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 43, 43)];
-        imageView.backgroundColor = [UIColor orangeColor];
+        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 15, 43, 43)];
+        imageView.backgroundColor = [UIColor colorFromHexString:@"#dddddd"];
         
-        titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(61, 7, 220, 20)];
+        titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(53, 17, 240, 40)];
         [titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
         [titleLabel setBackgroundColor:[UIColor clearColor]];
+        titleLabel.numberOfLines = 2;
         [titleLabel setTextColor: [UIColor darkGrayColor]];
+        //titleLabel.backgroundColor = [UIColor lightGrayColor];
         
-        pubDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(61, 25, 220, 20)];
-        [pubDateLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:12]];
+        pubDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(245, 4, 70, 20)];
+        [pubDateLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:10]];
         [pubDateLabel setBackgroundColor:[UIColor clearColor]];
+        pubDateLabel.textAlignment = NSTextAlignmentRight;
         [pubDateLabel setTextColor:[UIColor lightGrayColor]];
+        //pubDateLabel.backgroundColor = [UIColor darkGrayColor];
         
         [self.contentView addSubview:imageView];
         [self.contentView addSubview:titleLabel];
@@ -53,7 +58,9 @@
     if(!formatter)
     {
         formatter  = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"dd. MMMM, HH:mm:ss"];
+        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"de_DE"]];
+        [formatter setTimeZone:[NSTimeZone systemTimeZone]];
+        [formatter setDateFormat:@"dd. MMMM, HH:mm"];
         
     }
     pubDateLabel.text = [formatter stringFromDate:feedItem.pubDate];
@@ -62,8 +69,12 @@
     {
         imageView.image = feedItem.image;
     }
+    else
+    {
+        imageView.image = nil;
+    }
     
-    self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    //self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
