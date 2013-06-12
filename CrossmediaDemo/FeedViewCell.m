@@ -114,11 +114,18 @@
         [formatter setDateFormat:@"dd. MMMM, HH:mm"];
         
     }
-    pubDateLabel.text = [formatter stringFromDate:feed.pubDate];
     
-    if(!pubDateLabel.text){
-        pubDateLabel.text = @"Datum nicht angegeben";
+    if(feed.pubDate)
+    {
+        pubDateLabel.text = [formatter stringFromDate:feed.pubDate];
+    }else if(feed.lastBuildDate)
+    {
+        pubDateLabel.text = [formatter stringFromDate:feed.lastBuildDate];
     }
+    else{
+        pubDateLabel.text = @"Datum nicht verfügbar";
+    }
+    
     
     if(feed.image)
     {

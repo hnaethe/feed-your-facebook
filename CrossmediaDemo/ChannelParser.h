@@ -26,4 +26,6 @@
 
 - (void)channelParserDidFinish:(ChannelParser *)parser;
 
+- (void)channelParserDidFail:(ChannelParser *)parser;
+
 @end

@@ -58,6 +58,12 @@
     [[MediaController sharedInstance] performSelectorInBackground:@selector(startParsingFeedItems:) withObject:self.feed];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    self.tableView.frame = self.view.frame;
+}
+
 - (void)didReloadFeeds:(NSNotification *)notification
 {
 
@@ -73,8 +79,6 @@
     {
         [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }*/
-    
-    
 }
 
 - (void)didReceiveMemoryWarning

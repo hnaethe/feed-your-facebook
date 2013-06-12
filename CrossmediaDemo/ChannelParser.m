@@ -137,9 +137,15 @@
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
     
+    NSString *message = [NSString stringWithFormat:@"Der Feed mit der URL %@ konnte leider nicht geparst werden.", self.feed.url];
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Parsing Fehler" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alertView show];
+    
     NSString *errorString = [NSString stringWithFormat:@"Error code %i", [parseError code]];
     NSLog(@"Error parsing XML: %@", errorString);
     
+    if(self.delegate) [self.delegate channelParserDidFail:self];
 }
 
 

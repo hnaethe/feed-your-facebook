@@ -45,8 +45,6 @@
 {
     Feed * feed = [[Feed alloc] initWithURL:[NSURL URLWithString:url]];
     [feeds addObject:feed];
-    feed = nil;
-    
     [self startParsingChannel:feed];
 }
 
@@ -63,9 +61,20 @@
 - (void)channelParserDidFinish:(ChannelParser *)parser
 {
     parser.feed.isParsing = NO;
+    // wenn Feed trotz parsens immer noch unvollständig ist dann markiere ihn als nicht parsbar um parsing Endlosschleife zu verhindern
+    if(parser.feed.hasNotBeenParsed) parser.feed.cannotBeParsed = YES;
     
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:parser.feed,@"feed", nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"NewRSSData" object:nil userInfo:dict];
+}
+
+- (void)channelParserDidFail:(ChannelParser *)parser
+{
+    parser.feed.isParsing = NO;
+    if(parser.feed.hasNotBeenParsed) parser.feed.cannotBeParsed = YES;
+    
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:parser.feed,@"feed", nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FailedToLoadRSSData" object:nil userInfo:dict];
 }
 
 

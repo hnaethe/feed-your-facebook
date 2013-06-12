@@ -11,6 +11,7 @@
 
 @interface Feed : ImageObject;
 @property (nonatomic, assign) BOOL isParsing;
+@property (nonatomic, assign) BOOL cannotBeParsed;
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSURL *url;

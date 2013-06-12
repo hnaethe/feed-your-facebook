@@ -11,7 +11,7 @@
 
 @implementation Feed
 
-@synthesize isParsing;
+@synthesize isParsing, cannotBeParsed;
 
 @synthesize title;
 @synthesize url;
@@ -29,6 +29,7 @@
     if((self = [super init]))
     {
         self.isParsing = NO;
+        self.cannotBeParsed = NO;
         self.url = feedUrl;
         self.feedItems = [[NSMutableArray alloc] init];
         self.iconSize = 43;

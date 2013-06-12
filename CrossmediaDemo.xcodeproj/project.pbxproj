@@ -40,6 +40,10 @@
 		B1738EA81728951600F6EF0A /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B1738EA71728951600F6EF0A /* FacebookHandler.m */; };
 		B1738EAB17289A1E00F6EF0A /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1738EAA17289A1E00F6EF0A /* SettingsViewController.m */; };
 		B1848DDE1768669100832B6C /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1848DDC1768669100832B6C /* DetailViewController.m */; };
+		B1848DE31768EECD00832B6C /* FacebookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1848DE21768EECC00832B6C /* FacebookViewController.m */; };
+		B1848DE61768F30C00832B6C /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B1848DE51768F30C00832B6C /* Reachability.m */; };
+		B1848DEA1768F34A00832B6C /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B1848DE91768F34A00832B6C /* NetworkManager.m */; };
+		B1848DEC1768F69300832B6C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1848DEB1768F69300832B6C /* SystemConfiguration.framework */; };
 		B1EF38E31767E26A00301A4A /* FeedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF38E11767E26A00301A4A /* FeedTableViewController.m */; };
 		B1EF38E81767ED8000301A4A /* AddFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF38E61767ED7F00301A4A /* AddFeedViewController.m */; };
 /* End PBXBuildFile section */
@@ -99,6 +103,13 @@
 		B1738EAA17289A1E00F6EF0A /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		B1848DDB1768669100832B6C /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		B1848DDC1768669100832B6C /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		B1848DE11768EECB00832B6C /* FacebookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookViewController.h; sourceTree = "<group>"; };
+		B1848DE21768EECC00832B6C /* FacebookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookViewController.m; sourceTree = "<group>"; };
+		B1848DE41768F30C00832B6C /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		B1848DE51768F30C00832B6C /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		B1848DE81768F34A00832B6C /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
+		B1848DE91768F34A00832B6C /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
+		B1848DEB1768F69300832B6C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		B1EF38E01767E26A00301A4A /* FeedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedTableViewController.h; sourceTree = "<group>"; };
 		B1EF38E11767E26A00301A4A /* FeedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedTableViewController.m; sourceTree = "<group>"; };
 		B1EF38E51767ED7F00301A4A /* AddFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFeedViewController.h; sourceTree = "<group>"; };
@@ -110,6 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1848DEC1768F69300832B6C /* SystemConfiguration.framework in Frameworks */,
 				B1738EA517288D9000F6EF0A /* Social.framework in Frameworks */,
 				B1738EA317288D8A00F6EF0A /* Security.framework in Frameworks */,
 				B1738EA117288D7300F6EF0A /* libsqlite3.dylib in Frameworks */,
@@ -137,6 +149,7 @@
 		B15D0C1B1720A4D1008B0CA2 = {
 			isa = PBXGroup;
 			children = (
+				B1848DEB1768F69300832B6C /* SystemConfiguration.framework */,
 				B1738EA417288D9000F6EF0A /* Social.framework */,
 				B1738EA217288D8A00F6EF0A /* Security.framework */,
 				B1738EA017288D7300F6EF0A /* libsqlite3.dylib */,
@@ -170,30 +183,13 @@
 		B15D0C2D1720A4D1008B0CA2 /* CrossmediaDemo */ = {
 			isa = PBXGroup;
 			children = (
+				B167F47F1765C19C00D15A2B /* Additions */,
 				B15D0C991724331A008B0CA2 /* Views */,
 				B15D0C361720A4D1008B0CA2 /* AppDelegate.h */,
 				B15D0C371720A4D1008B0CA2 /* AppDelegate.m */,
-				B15D0C9A17243AA8008B0CA2 /* IconDownloader.h */,
-				B167F47F1765C19C00D15A2B /* Categories */,
-				B15D0C9B17243AA8008B0CA2 /* IconDownloader.m */,
-				B1738EA61728951600F6EF0A /* FacebookHandler.h */,
-				B1738EA71728951600F6EF0A /* FacebookHandler.m */,
-				B167F4791765A1E500D15A2B /* ImageObject.h */,
-				B167F47A1765A1E600D15A2B /* ImageObject.m */,
-				B15D0C9017233782008B0CA2 /* Feed.h */,
-				B15D0C9117233782008B0CA2 /* Feed.m */,
-				B15D0C93172338A6008B0CA2 /* FeedItem.h */,
-				B15D0C94172338A7008B0CA2 /* FeedItem.m */,
-				B167F478176491E900D15A2B /* Parser */,
-				B15D0C4A1720A678008B0CA2 /* MediaController.h */,
-				B15D0C4B1720A678008B0CA2 /* MediaController.m */,
-				B13375BD173552B90017DCF8 /* DataManager.h */,
-				B13375BE173552B90017DCF8 /* DataManager.m */,
-				B15D0C3F1720A4D1008B0CA2 /* MainStoryboard.storyboard */,
-				B1848DDB1768669100832B6C /* DetailViewController.h */,
-				B1848DDC1768669100832B6C /* DetailViewController.m */,
-				B1EF38E51767ED7F00301A4A /* AddFeedViewController.h */,
-				B1EF38E61767ED7F00301A4A /* AddFeedViewController.m */,
+				B1848DED1768F75700832B6C /* Helper */,
+				B1848DEE1768F78100832B6C /* Model */,
+				B1848DE71768F31200832B6C /* Network */,
 				B15D0C2E1720A4D1008B0CA2 /* Supporting Files */,
 			);
 			path = CrossmediaDemo;
@@ -216,6 +212,12 @@
 		B15D0C991724331A008B0CA2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B15D0C3F1720A4D1008B0CA2 /* MainStoryboard.storyboard */,
+				B1848DE11768EECB00832B6C /* FacebookViewController.h */,
+				B1848DE21768EECC00832B6C /* FacebookViewController.m */,
+				B1848DDB1768669100832B6C /* DetailViewController.h */,
+				B1848DDC1768669100832B6C /* DetailViewController.m */,
+				B1848DE01768CF3A00832B6C /* AddFeed */,
 				B12085E91729CE030059DA08 /* Settings */,
 				B15D0CA417249C22008B0CA2 /* FeedItem */,
 				B15D0CA317249C0F008B0CA2 /* Feed */,
@@ -260,13 +262,70 @@
 			name = Parser;
 			sourceTree = "<group>";
 		};
-		B167F47F1765C19C00D15A2B /* Categories */ = {
+		B167F47F1765C19C00D15A2B /* Additions */ = {
 			isa = PBXGroup;
 			children = (
 				B167F47C1765C19400D15A2B /* UIColor+Additions.h */,
 				B167F47D1765C19400D15A2B /* UIColor+Additions.m */,
 			);
-			name = Categories;
+			name = Additions;
+			sourceTree = "<group>";
+		};
+		B1848DE01768CF3A00832B6C /* AddFeed */ = {
+			isa = PBXGroup;
+			children = (
+				B1EF38E51767ED7F00301A4A /* AddFeedViewController.h */,
+				B1EF38E61767ED7F00301A4A /* AddFeedViewController.m */,
+			);
+			name = AddFeed;
+			sourceTree = "<group>";
+		};
+		B1848DE71768F31200832B6C /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				B1848DE41768F30C00832B6C /* Reachability.h */,
+				B1848DE51768F30C00832B6C /* Reachability.m */,
+				B1848DE81768F34A00832B6C /* NetworkManager.h */,
+				B1848DE91768F34A00832B6C /* NetworkManager.m */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
+		B1848DED1768F75700832B6C /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				B15D0C9A17243AA8008B0CA2 /* IconDownloader.h */,
+				B15D0C9B17243AA8008B0CA2 /* IconDownloader.m */,
+				B1738EA61728951600F6EF0A /* FacebookHandler.h */,
+				B1738EA71728951600F6EF0A /* FacebookHandler.m */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
+		B1848DEE1768F78100832B6C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B1848DEF1768F7A300832B6C /* Classes */,
+				B15D0C4A1720A678008B0CA2 /* MediaController.h */,
+				B167F478176491E900D15A2B /* Parser */,
+				B15D0C4B1720A678008B0CA2 /* MediaController.m */,
+				B13375BD173552B90017DCF8 /* DataManager.h */,
+				B13375BE173552B90017DCF8 /* DataManager.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		B1848DEF1768F7A300832B6C /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B167F4791765A1E500D15A2B /* ImageObject.h */,
+				B167F47A1765A1E600D15A2B /* ImageObject.m */,
+				B15D0C9017233782008B0CA2 /* Feed.h */,
+				B15D0C9117233782008B0CA2 /* Feed.m */,
+				B15D0C93172338A6008B0CA2 /* FeedItem.h */,
+				B15D0C94172338A7008B0CA2 /* FeedItem.m */,
+			);
+			name = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -356,6 +415,9 @@
 				B1EF38E31767E26A00301A4A /* FeedTableViewController.m in Sources */,
 				B1EF38E81767ED8000301A4A /* AddFeedViewController.m in Sources */,
 				B1848DDE1768669100832B6C /* DetailViewController.m in Sources */,
+				B1848DE31768EECD00832B6C /* FacebookViewController.m in Sources */,
+				B1848DE61768F30C00832B6C /* Reachability.m in Sources */,
+				B1848DEA1768F34A00832B6C /* NetworkManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

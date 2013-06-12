@@ -10,6 +10,7 @@
 #import "MediaController.h"
 #import "Feed.h"
 #import "FeedViewCell.h"
+#import "NetworkManager.h"
 
 
 @interface FeedTableViewController ()
@@ -39,6 +40,8 @@
     self.imageDownloadsInProgress = [[NSMutableDictionary alloc] init];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didParseRSSFeed:) name:@"NewRSSData" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFailParsingRSSFeed:) name:@"FailedToLoadRSSData" object:nil];
+    
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refreshView:) forControlEvents:UIControlEventValueChanged];
@@ -92,7 +95,7 @@
         }
     }
     
-    if(feed.hasNotBeenParsed && !feed.isParsing)
+    if(feed.hasNotBeenParsed && !feed.isParsing && !feed.cannotBeParsed)
     {
         [[MediaController sharedInstance] performSelectorInBackground:@selector(startParsingChannel:) withObject:feed];
     }
@@ -185,6 +188,25 @@
     
 }
 
+- (void)didFailParsingRSSFeed:(NSNotification *)notification
+{
+    if([[NetworkManager sharedInstance] hasInternetConnection])
+    {
+        Feed *feed = [notification.userInfo objectForKey:@"feed"];
+        [self.tableView reloadData];
+    
+        int index = [self.feeds indexOfObject:feed];
+        [self.feeds removeObject:feed];
+    
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+    else
+    {
+        [[NetworkManager sharedInstance] showInternetError];
+    }
+}
+
 #pragma mark - Segue Stuff
 
 - (void)tableView:(UITableView *)atableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -207,5 +229,20 @@
 - (void)refreshView:(UIRefreshControl *)refresh
 {
     [[MediaController sharedInstance] performSelectorInBackground:@selector(refreshAllChannels) withObject:nil];
+}
+
+#pragma mark - Deletion Handler
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //remove the deleted object from your data source.
+        //If your data source is an NSMutableArray, do this
+        [self.feeds removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+    }
 }
 @end

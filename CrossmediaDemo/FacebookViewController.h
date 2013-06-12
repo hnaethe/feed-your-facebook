@@ -1,5 +1,5 @@
 //
-//  AddFeedViewController.h
+//  FacebookViewController.h
 //  CrossmediaDemo
 //
 //  Created by Hendrik Näther on 12.06.13.
@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddFeedViewController : UIViewController <UITextFieldDelegate>
-@property (nonatomic, strong) IBOutlet UITextField *textField;
+@interface FacebookViewController : UIViewController
 
 @end

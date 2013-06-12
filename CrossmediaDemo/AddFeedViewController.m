@@ -29,14 +29,21 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"Neuer Feed";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonItemStyleDone target:self  action:@selector(didTouchSave:)];
+    
+    self.textField.delegate = self;
+    [self.textField becomeFirstResponder];
+    self.textField.text = @"http://www.";
     // Do any additional setup after loading the view from its nib.
 }
 
-- (void)didTouchSave:(id)sender
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if(!self.textField.hasText || [self.textField.text isEqualToString:@""]) return;
+    if(!textField.hasText || [textField.text isEqualToString:@""]) return NO;
+    [textField resignFirstResponder];
+    
     [[MediaController sharedInstance] createFeedWithURL:self.textField.text];
+    [self.navigationController popViewControllerAnimated:YES];
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning

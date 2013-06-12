@@ -132,12 +132,13 @@
         return;
     }
     
-    if([elementName isEqualToString:@"content:encoded"])
+    if([elementName rangeOfString:@"content"].location != NSNotFound)
     {
         if(!self.feedItem.imageURL) [self parseImageIfPossible];
     }
     
-    if([elementName isEqualToString:@"enclosure"])
+    // if enclosure is part of the elementName string
+    if([elementName rangeOfString:@"enclosure"].location != NSNotFound)
     {
         if(!self.feedItem.imageURL) [self parseImageIfPossible];
     }
@@ -170,7 +171,11 @@
 - (NSString *)urlFromString:(NSString *)string
 {
     NSError *error = NULL;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(http://|https://).+(jpg|png)"
+    
+    //(http://|https://)[^'\"<>]+(jpg|png|jpeg|gif) das [^'\"<>]+ bedeutet dass alle Zeichen außer denen in der Klammer
+    // verwendet werden dürfen. Verhindert, dass ein bei einem Text mit mehreren Bildern auch mehrere Bilder als ein match gesehen werden
+    // bspw. http://bild.jpg"> <bla> ... andersbild.jpg würde sonst auch matchen da ja alles Zeichen zwischen http und jpg zugelassen sind
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(http://|https://)[^'\"<>]+(jpg|png|jpeg|gif)"
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
     
