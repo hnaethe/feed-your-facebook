@@ -61,6 +61,11 @@
     {
         depth++;
         NSLog(@"Started element: %@ with depth: %d",elementName, depth);
+        
+        if([elementName isEqualToString:@"enclosure"] && ([[attributeDict valueForKey:@"type"] isEqualToString:@"image/jpg"] || [[attributeDict valueForKey:@"mime-type"] isEqualToString:@"image/jpeg"]))
+        {
+            self.feedItem.imageURL = [NSURL URLWithString:[attributeDict valueForKey:@"url"]];
+        }
     }
 }
 
