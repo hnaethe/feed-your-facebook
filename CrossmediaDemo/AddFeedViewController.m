@@ -29,7 +29,7 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"Neuer Feed";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self  action:@selector(didTouchSave:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonItemStyleDone target:self  action:@selector(didTouchSave:)];
     // Do any additional setup after loading the view from its nib.
 }
 

@@ -12,17 +12,20 @@
 #import "FeedItemViewCell.h"
 #import "MediaController.h"
 #import "FacebookHandler.h"
+#import "DetailViewController.h"
 
 @interface FeedItemTableViewController ()
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableDictionary *imageDownloadsInProgress;
 @property (nonatomic, strong) Feed *feed;
+@property (nonatomic, strong) FeedItem *selectedFeedItem;
 @end
 
 @implementation FeedItemTableViewController
 @synthesize tableView = _tableView;
 @synthesize imageDownloadsInProgress = _imageDownloadsInProgress;
 @synthesize feed = _feed;
+@synthesize selectedFeedItem = _selectedFeedItem;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -194,10 +197,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.selectedFeedItem = [self.feed.feedItems objectAtIndex:indexPath.row];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    FeedItem *feedItem = [self.feed.feedItems objectAtIndex:indexPath.row];
-    [[FacebookHandler sharedInstance] publishStoryWithFeedItem:feedItem];
+    [self performSegueWithIdentifier:@"detailSegue" sender:self];
+    
+    /*FeedItem *feedItem = [self.feed.feedItems objectAtIndex:indexPath.row];
+    [[FacebookHandler sharedInstance] publishStoryWithFeedItem:feedItem];*/
 }
 
 - (void)didTouchSettings:(id)sender
@@ -210,6 +217,15 @@
     if([[segue identifier] compare:@"settingsSegue"] == 0)
     {
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Zurück" style:UIBarButtonItemStylePlain target:nil action:nil];
+    }
+    
+    if([[segue identifier] compare:@"detailSegue"] == 0)
+    {
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Zurück" style:UIBarButtonItemStylePlain target:nil action:nil];
+        
+         NSURL *url = [NSURL URLWithString:self.selectedFeedItem.link];
+        [(DetailViewController *)[segue destinationViewController] setUrl:url];
+       
     }
 }
 

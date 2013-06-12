@@ -39,6 +39,7 @@
 		B1738EA517288D9000F6EF0A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1738EA417288D9000F6EF0A /* Social.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		B1738EA81728951600F6EF0A /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B1738EA71728951600F6EF0A /* FacebookHandler.m */; };
 		B1738EAB17289A1E00F6EF0A /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1738EAA17289A1E00F6EF0A /* SettingsViewController.m */; };
+		B1848DDE1768669100832B6C /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1848DDC1768669100832B6C /* DetailViewController.m */; };
 		B1EF38E31767E26A00301A4A /* FeedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF38E11767E26A00301A4A /* FeedTableViewController.m */; };
 		B1EF38E81767ED8000301A4A /* AddFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF38E61767ED7F00301A4A /* AddFeedViewController.m */; };
 /* End PBXBuildFile section */
@@ -96,6 +97,8 @@
 		B1738EA71728951600F6EF0A /* FacebookHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookHandler.m; sourceTree = "<group>"; };
 		B1738EA917289A1E00F6EF0A /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		B1738EAA17289A1E00F6EF0A /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		B1848DDB1768669100832B6C /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		B1848DDC1768669100832B6C /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		B1EF38E01767E26A00301A4A /* FeedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedTableViewController.h; sourceTree = "<group>"; };
 		B1EF38E11767E26A00301A4A /* FeedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedTableViewController.m; sourceTree = "<group>"; };
 		B1EF38E51767ED7F00301A4A /* AddFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFeedViewController.h; sourceTree = "<group>"; };
@@ -187,6 +190,8 @@
 				B13375BD173552B90017DCF8 /* DataManager.h */,
 				B13375BE173552B90017DCF8 /* DataManager.m */,
 				B15D0C3F1720A4D1008B0CA2 /* MainStoryboard.storyboard */,
+				B1848DDB1768669100832B6C /* DetailViewController.h */,
+				B1848DDC1768669100832B6C /* DetailViewController.m */,
 				B1EF38E51767ED7F00301A4A /* AddFeedViewController.h */,
 				B1EF38E61767ED7F00301A4A /* AddFeedViewController.m */,
 				B15D0C2E1720A4D1008B0CA2 /* Supporting Files */,
@@ -350,6 +355,7 @@
 				B167F47E1765C19500D15A2B /* UIColor+Additions.m in Sources */,
 				B1EF38E31767E26A00301A4A /* FeedTableViewController.m in Sources */,
 				B1EF38E81767ED8000301A4A /* AddFeedViewController.m in Sources */,
+				B1848DDE1768669100832B6C /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

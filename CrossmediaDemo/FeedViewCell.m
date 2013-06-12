@@ -69,7 +69,7 @@
 - (void)setFeed:(Feed *)feed
 {
     
-    if(feed.isParsing)
+    if(feed.isParsing || feed.hasNotBeenParsed)
     {
         [self showLoadingState:feed];
     }
@@ -115,6 +115,10 @@
         
     }
     pubDateLabel.text = [formatter stringFromDate:feed.pubDate];
+    
+    if(!pubDateLabel.text){
+        pubDateLabel.text = @"Datum nicht angegeben";
+    }
     
     if(feed.image)
     {

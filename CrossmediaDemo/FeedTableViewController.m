@@ -40,8 +40,10 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didParseRSSFeed:) name:@"NewRSSData" object:nil];
     
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(refreshView:) forControlEvents:UIControlEventValueChanged];
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refreshView:) forControlEvents:UIControlEventValueChanged];
+    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Aktualisiere Daten...", nil)];
+    [self setRefreshControl:refreshControl];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -172,11 +174,15 @@
 - (void)didParseRSSFeed:(NSNotification*)notification
 {
     Feed *feed = [notification.userInfo objectForKey:@"feed"];
-    int row = [self.feeds indexOfObject:feed];
+    /*int row = [self.feeds indexOfObject:feed];
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    [self.refreshControl endRefreshing];*/
     [self.refreshControl endRefreshing];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    
 }
 
 #pragma mark - Segue Stuff
@@ -200,9 +206,6 @@
 
 - (void)refreshView:(UIRefreshControl *)refresh
 {
-    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Aktualisiere Daten...", nil)];
-    
     [[MediaController sharedInstance] performSelectorInBackground:@selector(refreshAllChannels) withObject:nil];
-
 }
 @end
