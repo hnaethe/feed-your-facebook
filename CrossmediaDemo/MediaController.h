@@ -9,9 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "FeedItemParser.h"
 #import "ChannelParser.h"
+#import "FeedTableViewController.h"
 
 @class Feed;
-@interface MediaController : NSObject <FeedItemParserProtocol, ChannelParserProtocol>
+typedef void(^HNBackgroundRefreshCompletionHandler)(BOOL didParseFeeds);
+
+@interface MediaController : NSObject <FeedItemParserProtocol>
 @property (nonatomic, strong) NSMutableArray *feeds;
 @property (nonatomic, strong) Feed *selectedFeed;
 
@@ -24,6 +27,8 @@
 - (void)startParsingFeedItems:(Feed *)feed;
 
 - (void)refreshAllChannels;
+
+- (void)fetchChannelsWithCompletionHandler:(HNBackgroundRefreshCompletionHandler)completionHandler;
 
 - (void)refreshAllFeedItems;
 

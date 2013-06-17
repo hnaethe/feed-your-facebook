@@ -39,21 +39,21 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self  action:@selector(didTouchAdd:)];
     
-    
-    self.navigationItem.title = @"Feed-Übersicht";
-    [self.navigationController.navigationBar setTintColor:[UIColor orangeColor]];
-    
-    self.feeds = [[MediaController sharedInstance] feeds];
+    if([[[MediaController sharedInstance] feeds] count] == 0)
+    {
+        [[MediaController sharedInstance] loadFeedsFromData];
+        self.feeds = [[MediaController sharedInstance] feeds];
+
+    }
     self.imageDownloadsInProgress = [[NSMutableDictionary alloc] init];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didParseRSSFeed:) name:@"NewRSSData" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFailParsingRSSFeed:) name:@"FailedToLoadRSSData" object:nil];
     
     
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    [refreshControl addTarget:self action:@selector(refreshView:) forControlEvents:UIControlEventValueChanged];
-    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Aktualisiere Daten...", nil)];
-    [self setRefreshControl:refreshControl];
+    
+    [self.refreshControl addTarget:self action:@selector(refreshView:) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Aktualisiere Daten...", nil)];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -197,6 +197,8 @@
 
 - (void)didFailParsingRSSFeed:(NSNotification *)notification
 {
+    [self.refreshControl endRefreshing];
+    
     if([[NetworkManager sharedInstance] hasInternetConnection])
     {
         Feed *feed = [notification.userInfo objectForKey:@"feed"];

@@ -53,28 +53,27 @@
     feed.isParsing = YES;
     
     ChannelParser *parser = [[ChannelParser alloc] init];
-    parser.delegate = self;
     
-    [parser parseChannelFromFeed:feed];
-}
-
-- (void)channelParserDidFinish:(ChannelParser *)parser
-{
-    parser.feed.isParsing = NO;
-    // wenn Feed trotz parsens immer noch unvollständig ist dann markiere ihn als nicht parsbar um parsing Endlosschleife zu verhindern
-    if(parser.feed.hasNotBeenParsed) parser.feed.cannotBeParsed = YES;
-    
-    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:parser.feed,@"feed", nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"NewRSSData" object:nil userInfo:dict];
-}
-
-- (void)channelParserDidFail:(ChannelParser *)parser
-{
-    parser.feed.isParsing = NO;
-    if(parser.feed.hasNotBeenParsed) parser.feed.cannotBeParsed = YES;
-    
-    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:parser.feed,@"feed", nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"FailedToLoadRSSData" object:nil userInfo:dict];
+    [parser parseChannelFromFeed:feed completionHandler:^(ChannelParser *parser, BOOL didParseFeeds, NSError *error){
+        
+        if(didParseFeeds)
+        {
+            parser.feed.isParsing = NO;
+            // wenn Feed trotz parsens immer noch unvollständig ist dann markiere ihn als nicht parsbar um parsing Endlosschleife zu verhindern
+            if(parser.feed.hasNotBeenParsed) parser.feed.cannotBeParsed = YES;
+            
+            NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:parser.feed,@"feed", nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"NewRSSData" object:nil userInfo:dict];
+        }
+        else
+        {
+            parser.feed.isParsing = NO;
+            if(parser.feed.hasNotBeenParsed) parser.feed.cannotBeParsed = YES;
+            
+            NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:parser.feed,@"feed", nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"FailedToLoadRSSData" object:nil userInfo:dict];
+        }
+    }];
 }
 
 
@@ -109,6 +108,12 @@
     for (Feed *feed in feeds) {
         [self startParsingChannel:feed];
     }
+}
+
+- (void)fetchChannelsWithCompletionHandler:(HNBackgroundRefreshCompletionHandler)completionHandler
+{
+    [self refreshAllChannels];
+    completionHandler(YES);
 }
 
 - (void)refreshAllFeedItems

@@ -14,18 +14,21 @@
 @property (nonatomic, strong) NSString *resultText;
 @property (nonatomic, assign) int depth, cachedDepth;
 @property (nonatomic, assign) BOOL didFinish;
+@property (nonatomic, strong) HNChannelParserCompletionHandler completionHandler;
 @end
 
 @implementation ChannelParser
-@synthesize delegate = _delegate;
 @synthesize feed = _feed;
 @synthesize currentlyParsedText = _currentlyParsedText;
 @synthesize resultText = _resultText;
 @synthesize depth, cachedDepth;
+@synthesize completionHandler = _completionHandler;
 @synthesize didFinish;
 
-- (void)parseChannelFromFeed:(Feed *)rssFeed
+- (void)parseChannelFromFeed:(Feed *)rssFeed completionHandler:(HNChannelParserCompletionHandler)completionHandler
 {
+    self.completionHandler = completionHandler;
+    
     self.feed = rssFeed;
     depth = 0;
     cachedDepth = 0;
@@ -129,10 +132,7 @@
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser
 {
-    if(self.delegate)
-    {
-        [self.delegate channelParserDidFinish:self];
-    }
+    self.completionHandler(self, YES, nil);
 }
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
@@ -145,7 +145,7 @@
     NSString *errorString = [NSString stringWithFormat:@"Error code %i", [parseError code]];
     NSLog(@"Error parsing XML: %@", errorString);
     
-    if(self.delegate) [self.delegate channelParserDidFail:self];
+    self.completionHandler(self, NO, parseError);
 }
 
 

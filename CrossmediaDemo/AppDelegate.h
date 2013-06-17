@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class FeedTableViewController;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
+@property (strong, nonatomic) FeedTableViewController *viewControllerForRefresh;
 @end

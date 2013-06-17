@@ -18,7 +18,6 @@
 		B15D0C3C1720A4D1008B0CA2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B15D0C3B1720A4D1008B0CA2 /* Default@2x.png */; };
 		B15D0C3E1720A4D1008B0CA2 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B15D0C3D1720A4D1008B0CA2 /* Default-568h@2x.png */; };
 		B15D0C411720A4D1008B0CA2 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B15D0C3F1720A4D1008B0CA2 /* MainStoryboard.storyboard */; };
-		B15D0C441720A4D1008B0CA2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B15D0C431720A4D1008B0CA2 /* ViewController.m */; };
 		B15D0C4C1720A678008B0CA2 /* MediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = B15D0C4B1720A678008B0CA2 /* MediaController.m */; };
 		B15D0C4F1720A6B4008B0CA2 /* FeedItemParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B15D0C4E1720A6B4008B0CA2 /* FeedItemParser.m */; };
 		B15D0C9217233782008B0CA2 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = B15D0C9117233782008B0CA2 /* Feed.m */; };
@@ -43,6 +42,22 @@
 		B1848DE61768F30C00832B6C /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B1848DE51768F30C00832B6C /* Reachability.m */; };
 		B1848DEA1768F34A00832B6C /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B1848DE91768F34A00832B6C /* NetworkManager.m */; };
 		B1848DEC1768F69300832B6C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1848DEB1768F69300832B6C /* SystemConfiguration.framework */; };
+		B184EC91176EDBDB007BA548 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B184EC8F176EDBDB007BA548 /* Default.png */; };
+		B184EC92176EDBDB007BA548 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B184EC90176EDBDB007BA548 /* Default@2x.png */; };
+		B184EC95176EDC99007BA548 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B184EC93176EDC99007BA548 /* Icon.png */; };
+		B184EC96176EDC99007BA548 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B184EC94176EDC99007BA548 /* Icon@2x.png */; };
+		B184EC99176EDCCD007BA548 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = B184EC97176EDCCD007BA548 /* Icon-Small.png */; };
+		B184EC9A176EDCCD007BA548 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B184EC98176EDCCD007BA548 /* Icon-Small@2x.png */; };
+		B184EC9D176EDDF6007BA548 /* Internetverbindung.png in Resources */ = {isa = PBXBuildFile; fileRef = B184EC9B176EDDF6007BA548 /* Internetverbindung.png */; };
+		B184EC9E176EDDF6007BA548 /* Internetverbindung@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B184EC9C176EDDF6007BA548 /* Internetverbindung@2x.png */; };
+		B184ECA1176EDE74007BA548 /* Tab-Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = B184EC9F176EDE74007BA548 /* Tab-Settings.png */; };
+		B184ECA2176EDE74007BA548 /* Tab-Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B184ECA0176EDE74007BA548 /* Tab-Settings@2x.png */; };
+		B184ECA5176EDEB2007BA548 /* Tab-Facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = B184ECA3176EDEB2007BA548 /* Tab-Facebook.png */; };
+		B184ECA6176EDEB2007BA548 /* Tab-Facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B184ECA4176EDEB2007BA548 /* Tab-Facebook@2x.png */; };
+		B184ECA9176EDF29007BA548 /* Tab-Feed.png in Resources */ = {isa = PBXBuildFile; fileRef = B184ECA7176EDF29007BA548 /* Tab-Feed.png */; };
+		B184ECAA176EDF29007BA548 /* Tab-Feed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B184ECA8176EDF29007BA548 /* Tab-Feed@2x.png */; };
+		B184ECAD176EE165007BA548 /* Einstellungsscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = B184ECAB176EE165007BA548 /* Einstellungsscreen.png */; };
+		B184ECAE176EE165007BA548 /* Einstellungsscreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B184ECAC176EE165007BA548 /* Einstellungsscreen@2x.png */; };
 		B1EF38E31767E26A00301A4A /* FeedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF38E11767E26A00301A4A /* FeedTableViewController.m */; };
 		B1EF38E81767ED8000301A4A /* AddFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF38E61767ED7F00301A4A /* AddFeedViewController.m */; };
 /* End PBXBuildFile section */
@@ -64,8 +79,6 @@
 		B15D0C3B1720A4D1008B0CA2 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		B15D0C3D1720A4D1008B0CA2 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		B15D0C401720A4D1008B0CA2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		B15D0C421720A4D1008B0CA2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		B15D0C431720A4D1008B0CA2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		B15D0C4A1720A678008B0CA2 /* MediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaController.h; sourceTree = "<group>"; };
 		B15D0C4B1720A678008B0CA2 /* MediaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaController.m; sourceTree = "<group>"; };
 		B15D0C4D1720A6B4008B0CA2 /* FeedItemParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedItemParser.h; sourceTree = "<group>"; };
@@ -107,6 +120,22 @@
 		B1848DE81768F34A00832B6C /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
 		B1848DE91768F34A00832B6C /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
 		B1848DEB1768F69300832B6C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		B184EC8F176EDBDB007BA548 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Design/Default.png; sourceTree = "<group>"; };
+		B184EC90176EDBDB007BA548 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Design/Default@2x.png"; sourceTree = "<group>"; };
+		B184EC93176EDC99007BA548 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		B184EC94176EDC99007BA548 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		B184EC97176EDCCD007BA548 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
+		B184EC98176EDCCD007BA548 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		B184EC9B176EDDF6007BA548 /* Internetverbindung.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Internetverbindung.png; sourceTree = "<group>"; };
+		B184EC9C176EDDF6007BA548 /* Internetverbindung@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Internetverbindung@2x.png"; sourceTree = "<group>"; };
+		B184EC9F176EDE74007BA548 /* Tab-Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tab-Settings.png"; sourceTree = "<group>"; };
+		B184ECA0176EDE74007BA548 /* Tab-Settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tab-Settings@2x.png"; sourceTree = "<group>"; };
+		B184ECA3176EDEB2007BA548 /* Tab-Facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tab-Facebook.png"; sourceTree = "<group>"; };
+		B184ECA4176EDEB2007BA548 /* Tab-Facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tab-Facebook@2x.png"; sourceTree = "<group>"; };
+		B184ECA7176EDF29007BA548 /* Tab-Feed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tab-Feed.png"; sourceTree = "<group>"; };
+		B184ECA8176EDF29007BA548 /* Tab-Feed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tab-Feed@2x.png"; sourceTree = "<group>"; };
+		B184ECAB176EE165007BA548 /* Einstellungsscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Einstellungsscreen.png; sourceTree = "<group>"; };
+		B184ECAC176EE165007BA548 /* Einstellungsscreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Einstellungsscreen@2x.png"; sourceTree = "<group>"; };
 		B1EF38E01767E26A00301A4A /* FeedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedTableViewController.h; sourceTree = "<group>"; };
 		B1EF38E11767E26A00301A4A /* FeedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedTableViewController.m; sourceTree = "<group>"; };
 		B1EF38E51767ED7F00301A4A /* AddFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFeedViewController.h; sourceTree = "<group>"; };
@@ -146,6 +175,8 @@
 		B15D0C1B1720A4D1008B0CA2 = {
 			isa = PBXGroup;
 			children = (
+				B184EC8F176EDBDB007BA548 /* Default.png */,
+				B184EC90176EDBDB007BA548 /* Default@2x.png */,
 				B1848DEB1768F69300832B6C /* SystemConfiguration.framework */,
 				B1738EA417288D9000F6EF0A /* Social.framework */,
 				B1738EA217288D8A00F6EF0A /* Security.framework */,
@@ -180,6 +211,7 @@
 		B15D0C2D1720A4D1008B0CA2 /* CrossmediaDemo */ = {
 			isa = PBXGroup;
 			children = (
+				B184EC8E176EDBCE007BA548 /* Assets */,
 				B167F47F1765C19C00D15A2B /* Additions */,
 				B15D0C991724331A008B0CA2 /* Views */,
 				B15D0C361720A4D1008B0CA2 /* AppDelegate.h */,
@@ -218,8 +250,6 @@
 				B12085E91729CE030059DA08 /* Settings */,
 				B15D0CA417249C22008B0CA2 /* FeedItem */,
 				B15D0CA317249C0F008B0CA2 /* Feed */,
-				B15D0C421720A4D1008B0CA2 /* ViewController.h */,
-				B15D0C431720A4D1008B0CA2 /* ViewController.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -302,8 +332,8 @@
 			children = (
 				B1848DEF1768F7A300832B6C /* Classes */,
 				B15D0C4A1720A678008B0CA2 /* MediaController.h */,
-				B167F478176491E900D15A2B /* Parser */,
 				B15D0C4B1720A678008B0CA2 /* MediaController.m */,
+				B167F478176491E900D15A2B /* Parser */,
 				B13375BD173552B90017DCF8 /* DataManager.h */,
 				B13375BE173552B90017DCF8 /* DataManager.m */,
 			);
@@ -321,6 +351,27 @@
 				B15D0C94172338A7008B0CA2 /* FeedItem.m */,
 			);
 			name = Classes;
+			sourceTree = "<group>";
+		};
+		B184EC8E176EDBCE007BA548 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				B184EC9B176EDDF6007BA548 /* Internetverbindung.png */,
+				B184EC9F176EDE74007BA548 /* Tab-Settings.png */,
+				B184ECA0176EDE74007BA548 /* Tab-Settings@2x.png */,
+				B184ECA3176EDEB2007BA548 /* Tab-Facebook.png */,
+				B184ECA7176EDF29007BA548 /* Tab-Feed.png */,
+				B184ECA8176EDF29007BA548 /* Tab-Feed@2x.png */,
+				B184ECAB176EE165007BA548 /* Einstellungsscreen.png */,
+				B184ECAC176EE165007BA548 /* Einstellungsscreen@2x.png */,
+				B184ECA4176EDEB2007BA548 /* Tab-Facebook@2x.png */,
+				B184EC9C176EDDF6007BA548 /* Internetverbindung@2x.png */,
+				B184EC97176EDCCD007BA548 /* Icon-Small.png */,
+				B184EC98176EDCCD007BA548 /* Icon-Small@2x.png */,
+				B184EC93176EDC99007BA548 /* Icon.png */,
+				B184EC94176EDC99007BA548 /* Icon@2x.png */,
+			);
+			name = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -375,10 +426,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				B15D0C321720A4D1008B0CA2 /* InfoPlist.strings in Resources */,
+				B184ECAE176EE165007BA548 /* Einstellungsscreen@2x.png in Resources */,
+				B184ECA5176EDEB2007BA548 /* Tab-Facebook.png in Resources */,
+				B184EC96176EDC99007BA548 /* Icon@2x.png in Resources */,
+				B184ECA6176EDEB2007BA548 /* Tab-Facebook@2x.png in Resources */,
+				B184EC91176EDBDB007BA548 /* Default.png in Resources */,
+				B184EC9E176EDDF6007BA548 /* Internetverbindung@2x.png in Resources */,
+				B184ECAD176EE165007BA548 /* Einstellungsscreen.png in Resources */,
 				B15D0C3A1720A4D1008B0CA2 /* Default.png in Resources */,
+				B184ECA2176EDE74007BA548 /* Tab-Settings@2x.png in Resources */,
 				B15D0C3C1720A4D1008B0CA2 /* Default@2x.png in Resources */,
+				B184ECA1176EDE74007BA548 /* Tab-Settings.png in Resources */,
+				B184EC95176EDC99007BA548 /* Icon.png in Resources */,
+				B184ECAA176EDF29007BA548 /* Tab-Feed@2x.png in Resources */,
 				B15D0C3E1720A4D1008B0CA2 /* Default-568h@2x.png in Resources */,
+				B184EC92176EDBDB007BA548 /* Default@2x.png in Resources */,
+				B184EC99176EDCCD007BA548 /* Icon-Small.png in Resources */,
 				B15D0C411720A4D1008B0CA2 /* MainStoryboard.storyboard in Resources */,
+				B184EC9D176EDDF6007BA548 /* Internetverbindung.png in Resources */,
+				B184EC9A176EDCCD007BA548 /* Icon-Small@2x.png in Resources */,
+				B184ECA9176EDF29007BA548 /* Tab-Feed.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,7 +458,6 @@
 			files = (
 				B15D0C341720A4D1008B0CA2 /* main.m in Sources */,
 				B15D0C381720A4D1008B0CA2 /* AppDelegate.m in Sources */,
-				B15D0C441720A4D1008B0CA2 /* ViewController.m in Sources */,
 				B15D0C4C1720A678008B0CA2 /* MediaController.m in Sources */,
 				B15D0C4F1720A6B4008B0CA2 /* FeedItemParser.m in Sources */,
 				B15D0C9217233782008B0CA2 /* Feed.m in Sources */,
@@ -504,6 +570,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CrossmediaDemo/CrossmediaDemo-Prefix.pch";
 				INFOPLIST_FILE = "CrossmediaDemo/CrossmediaDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -524,6 +591,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CrossmediaDemo/CrossmediaDemo-Prefix.pch";
 				INFOPLIST_FILE = "CrossmediaDemo/CrossmediaDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",

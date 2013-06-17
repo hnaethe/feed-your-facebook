@@ -8,24 +8,13 @@
 
 #import <Foundation/Foundation.h>
 @class Feed;
-@protocol ChannelParserProtocol;
+@class ChannelParser;
+typedef void(^HNChannelParserCompletionHandler)(ChannelParser *parser, BOOL didParseFeeds, NSError *error);
 
 @interface ChannelParser : NSObject <NSXMLParserDelegate>
 
-@property (nonatomic, weak) id<ChannelParserProtocol>delegate;
 @property (nonatomic, strong) Feed *feed;
 
-- (void)parseChannelFromFeed:(Feed *)rssFeed;
-
-@end
-
-
-@protocol ChannelParserProtocol
-
-@required
-
-- (void)channelParserDidFinish:(ChannelParser *)parser;
-
-- (void)channelParserDidFail:(ChannelParser *)parser;
+- (void)parseChannelFromFeed:(Feed *)rssFeed completionHandler:(HNChannelParserCompletionHandler)completionHandler;
 
 @end

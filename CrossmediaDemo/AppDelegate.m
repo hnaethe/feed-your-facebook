@@ -10,8 +10,10 @@
 #import "MediaController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "FacebookHandler.h"
+#import "FeedTableViewController.h"
 
 @implementation AppDelegate
+@synthesize viewControllerForRefresh = _viewControllerForRefresh;
 
 // custom Facebook shit
 - (BOOL)application:(UIApplication *)application
@@ -24,8 +26,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    // Enable background tasks
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    
     [[FacebookHandler sharedInstance] loginIfNeeded];
     return YES;
 }
@@ -51,8 +54,16 @@
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    NSLog(@"Background task :)");
-    
+    [[MediaController sharedInstance] fetchChannelsWithCompletionHandler:^(BOOL didReceiveNewFeeds){
+        if(didReceiveNewFeeds)
+        {
+            completionHandler(UIBackgroundFetchResultNewData);
+        }
+        else
+        {
+            completionHandler(UIBackgroundFetchResultNoData);
+        }
+    }];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

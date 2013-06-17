@@ -38,7 +38,7 @@
         settingsTable.backgroundView = nil;
     }
     
-    settingsTable.backgroundColor = [UIColor whiteColor];
+    settingsTable.backgroundColor = [UIColor clearColor];
     
     [self.view addSubview:settingsTable];
     
@@ -81,6 +81,7 @@
 	// reset dequeued cells
 	cell.accessoryView = nil;
 	cell.detailTextLabel.text = nil;
+    cell.backgroundColor = [UIColor clearColor];
     cell.detailTextLabel.textColor = [UIColor blackColor];
     cell.accessoryType = UITableViewCellAccessoryNone;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
