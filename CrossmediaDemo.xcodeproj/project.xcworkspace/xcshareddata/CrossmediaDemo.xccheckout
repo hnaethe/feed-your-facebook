@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D9FE20AF-3074-4444-81CA-C4EBA8690092</string>
+	<key>IDESourceControlProjectName</key>
+	<string>CrossmediaDemo</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>74D713A4-AA22-4366-B6F5-AB7AEC0710E9</key>
+		<string>ssh://github.com/hnaethe/feed-your-facebook</string>
+		<key>E1EC1ED8-0CC0-4276-9223-A7065CB7C012</key>
+		<string>https://github.com/facebook/facebook-ios-sdk.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>CrossmediaDemo.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>74D713A4-AA22-4366-B6F5-AB7AEC0710E9</key>
+		<string>../..</string>
+		<key>E1EC1ED8-0CC0-4276-9223-A7065CB7C012</key>
+		<string>../../../../libs/FacebookSDK</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/hnaethe/feed-your-facebook</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>74D713A4-AA22-4366-B6F5-AB7AEC0710E9</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>74D713A4-AA22-4366-B6F5-AB7AEC0710E9</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CrossmediaDemo</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E1EC1ED8-0CC0-4276-9223-A7065CB7C012</string>
+			<key>IDESourceControlWCCName</key>
+			<string>FacebookSDK</string>
+		</dict>
+	</array>
+</dict>
+</plist>

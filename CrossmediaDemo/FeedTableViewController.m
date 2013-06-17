@@ -21,7 +21,6 @@
 
 @synthesize feeds = _feeds;
 @synthesize imageDownloadsInProgress = _imageDownloadsInProgress;
-@synthesize delegate = _delegate;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -35,6 +34,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationItem.hidesBackButton = YES;
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self  action:@selector(didTouchAdd:)];
+    
+    
+    self.navigationItem.title = @"Feed-Übersicht";
+    [self.navigationController.navigationBar setTintColor:[UIColor orangeColor]];
     
     self.feeds = [[MediaController sharedInstance] feeds];
     self.imageDownloadsInProgress = [[NSMutableDictionary alloc] init];
@@ -216,7 +223,7 @@
     Feed *feed = [self.feeds objectAtIndex:indexPath.row];
     [[MediaController sharedInstance] setSelectedFeed:feed];
     
-    if(self.delegate) [self.delegate userDidSelectARow];
+    [self userDidSelectARow];
 }
 
 #pragma mark - Refresh Handler
@@ -244,5 +251,28 @@
         [self.feeds removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
     }
+}
+
+- (void)didTouchAdd:(id)sender
+{
+    [self performSegueWithIdentifier:@"addFeedSegue" sender:self];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([[segue identifier] compare:@"addFeedSegue"] == 0)
+    {
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Zurück" style:UIBarButtonItemStylePlain target:nil action:nil];
+    }
+    else if([[segue identifier] compare:@"feedItemSegue"] == 0)
+    {
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Zurück" style:UIBarButtonItemStylePlain target:nil action:nil];
+    }
+    
+}
+
+- (void)userDidSelectARow
+{
+    [self performSegueWithIdentifier:@"feedItemSegue" sender:self];
 }
 @end

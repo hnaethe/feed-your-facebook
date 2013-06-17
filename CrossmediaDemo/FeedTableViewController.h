@@ -9,19 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "IconDownloader.h"
 
-@protocol FeedTableViewControllerProtocol;
 @interface FeedTableViewController : UITableViewController <UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate, IconDownloaderDelegate>
 
-@property (nonatomic, weak) id<FeedTableViewControllerProtocol>delegate;
 @property (nonatomic, strong) NSMutableArray *feeds;
 @property (nonatomic, strong) NSMutableDictionary *imageDownloadsInProgress;
 
 - (void)refresh;
 
-@end
-
-@protocol FeedTableViewControllerProtocol
-@optional
-
-- (void)userDidSelectARow;
 @end

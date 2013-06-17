@@ -12,7 +12,7 @@
 
 @implementation NetworkManager
 
-- (NetworkManager *)sharedInstance
++ (NetworkManager *)sharedInstance
 {
     //  Static local predicate must be initialized to 0
     static NetworkManager *sharedInstance = nil;

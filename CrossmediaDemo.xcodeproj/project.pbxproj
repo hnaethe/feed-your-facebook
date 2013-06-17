@@ -23,7 +23,6 @@
 		B15D0C4F1720A6B4008B0CA2 /* FeedItemParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B15D0C4E1720A6B4008B0CA2 /* FeedItemParser.m */; };
 		B15D0C9217233782008B0CA2 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = B15D0C9117233782008B0CA2 /* Feed.m */; };
 		B15D0C95172338A7008B0CA2 /* FeedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B15D0C94172338A7008B0CA2 /* FeedItem.m */; };
-		B15D0C9817243311008B0CA2 /* FeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B15D0C9717243311008B0CA2 /* FeedViewController.m */; };
 		B15D0C9C17243AA8008B0CA2 /* IconDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = B15D0C9B17243AA8008B0CA2 /* IconDownloader.m */; };
 		B15D0C9F17243C2D008B0CA2 /* FeedViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B15D0C9E17243C2D008B0CA2 /* FeedViewCell.m */; };
 		B15D0CA217249B34008B0CA2 /* FeedItemTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B15D0CA117249B32008B0CA2 /* FeedItemTableViewController.m */; };
@@ -75,8 +74,6 @@
 		B15D0C9117233782008B0CA2 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
 		B15D0C93172338A6008B0CA2 /* FeedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedItem.h; sourceTree = "<group>"; };
 		B15D0C94172338A7008B0CA2 /* FeedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedItem.m; sourceTree = "<group>"; };
-		B15D0C9617243310008B0CA2 /* FeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedViewController.h; sourceTree = "<group>"; };
-		B15D0C9717243311008B0CA2 /* FeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedViewController.m; sourceTree = "<group>"; };
 		B15D0C9A17243AA8008B0CA2 /* IconDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconDownloader.h; sourceTree = "<group>"; };
 		B15D0C9B17243AA8008B0CA2 /* IconDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconDownloader.m; sourceTree = "<group>"; };
 		B15D0C9D17243C2D008B0CA2 /* FeedViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedViewCell.h; sourceTree = "<group>"; };
@@ -230,10 +227,8 @@
 		B15D0CA317249C0F008B0CA2 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				B15D0C9617243310008B0CA2 /* FeedViewController.h */,
 				B1EF38E01767E26A00301A4A /* FeedTableViewController.h */,
 				B1EF38E11767E26A00301A4A /* FeedTableViewController.m */,
-				B15D0C9717243311008B0CA2 /* FeedViewController.m */,
 				B15D0C9D17243C2D008B0CA2 /* FeedViewCell.h */,
 				B15D0C9E17243C2D008B0CA2 /* FeedViewCell.m */,
 			);
@@ -401,7 +396,6 @@
 				B15D0C4F1720A6B4008B0CA2 /* FeedItemParser.m in Sources */,
 				B15D0C9217233782008B0CA2 /* Feed.m in Sources */,
 				B15D0C95172338A7008B0CA2 /* FeedItem.m in Sources */,
-				B15D0C9817243311008B0CA2 /* FeedViewController.m in Sources */,
 				B15D0C9C17243AA8008B0CA2 /* IconDownloader.m in Sources */,
 				B15D0C9F17243C2D008B0CA2 /* FeedViewCell.m in Sources */,
 				B15D0CA217249B34008B0CA2 /* FeedItemTableViewController.m in Sources */,
